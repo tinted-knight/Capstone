@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     MainViewModel viewModel;
 
-//    DatabaseReference reference;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = getViewModel();
         registerLiveDataObservers();
-//        initFirebaseDatabse();
     }
 
     private MainViewModel getViewModel() {
@@ -69,27 +66,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
-//    Observer<Topic> topicObserver = new Observer<Topic>() {
-//        @Override public void onChanged(@Nullable Topic topic) {
-//            if (topic != null) {
-//                tvTitle.setText(topic.getTitle_dest());
-//                tvTitleTranslation.setText(topic.getTitle_source());
-//                Pair<String, String> text = composeText(topic.getText());
-//                tvTextSrc.setText(text.first);
-//                tvTextTranslation.setText(text.second);
-//            }
-//        }
-//
-//        private Pair<String, String> composeText(List<Topic.CardsContent> text) {
-//            StringBuilder src = new StringBuilder();
-//            StringBuilder dst = new StringBuilder();
-//            for (Topic.CardsContent cardsContent : text) {
-//                src.append(cardsContent.getSrc());
-//                dst.append(cardsContent.getDst());
-//            }
-//            return new Pair<>(src.toString(), dst.toString());
-//        }
-//    };
 
 }
