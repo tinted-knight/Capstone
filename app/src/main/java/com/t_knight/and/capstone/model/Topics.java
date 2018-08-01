@@ -4,7 +4,16 @@ import java.util.List;
 
 public class Topics {
 
+    private List<TopicTitle> content;
     private List<Topic> topics;
+
+    public List<TopicTitle> getContent() {
+        return content;
+    }
+
+    public void setContent(List<TopicTitle> content) {
+        this.content = content;
+    }
 
     public List<Topic> getTopics() {
         return topics;
@@ -12,6 +21,93 @@ public class Topics {
 
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
+    }
+
+    public static class TopicTitle {
+
+        /**
+         * id : 0
+         * titleFrom : Язык тела
+         * titleTo : Body language
+         * description : First description
+         * coverUrl : first cover url
+         * from : ru
+         * to : eng
+         * wordCount : 300
+         */
+
+        private int id;
+        private String titleFrom;
+        private String titleTo;
+        private String description;
+        private String coverUrl;
+        private String from;
+        private String to;
+        private int wordCount;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getTitleFrom() {
+            return titleFrom;
+        }
+
+        public void setTitleFrom(String titleFrom) {
+            this.titleFrom = titleFrom;
+        }
+
+        public String getTitleTo() {
+            return titleTo;
+        }
+
+        public void setTitleTo(String titleTo) {
+            this.titleTo = titleTo;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getCoverUrl() {
+            return coverUrl;
+        }
+
+        public void setCoverUrl(String coverUrl) {
+            this.coverUrl = coverUrl;
+        }
+
+        public String getFrom() {
+            return from;
+        }
+
+        public void setFrom(String from) {
+            this.from = from;
+        }
+
+        public String getTo() {
+            return to;
+        }
+
+        public void setTo(String to) {
+            this.to = to;
+        }
+
+        public int getWordCount() {
+            return wordCount;
+        }
+
+        public void setWordCount(int wordCount) {
+            this.wordCount = wordCount;
+        }
     }
 
     public static class Topic {
