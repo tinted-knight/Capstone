@@ -6,8 +6,8 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
-import com.t_knight.and.capstone.model.TopicDescList;
 import com.t_knight.and.capstone.model.TopicList;
+import com.t_knight.and.capstone.model.TopicContentList;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -20,11 +20,11 @@ public class MainViewModel extends AndroidViewModel {
         repo = new FirebaseConnection();
     }
 
-    public LiveData<TopicList> getAllTopicsContent() {
+    public LiveData<TopicContentList> getAllTopicsContent() {
         return repo.getAllTopicsContent();
     }
 
-    public LiveData<TopicDescList> getTopicTitles() {
+    public LiveData<TopicList> getTopicTitles() {
         return repo.getAllTopicsDescription();
     }
 }
