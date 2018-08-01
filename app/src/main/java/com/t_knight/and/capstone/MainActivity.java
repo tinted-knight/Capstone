@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.t_knight.and.capstone.main.TopicListAdapter;
-import com.t_knight.and.capstone.main.TopicListFragment;
+import com.t_knight.and.capstone.ui.main.TopicListAdapter;
+import com.t_knight.and.capstone.ui.main.TopicListFragment;
+import com.t_knight.and.capstone.model.Topics.TopicTitle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    @Override public void onTopicListItemClick(int id) {
-        Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+    @Override public void onTopicListItemClick(TopicTitle topicTitle) {
+        Toast.makeText(this, topicTitle.getTitleTo() + " : " + String.valueOf(topicTitle.getId()), Toast.LENGTH_SHORT).show();
     }
 }
