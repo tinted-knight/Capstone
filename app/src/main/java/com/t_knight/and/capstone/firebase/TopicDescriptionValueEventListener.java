@@ -8,7 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.t_knight.and.capstone.model.TopicList;
-import com.t_knight.and.capstone.model.Topics.TopicTitle;
+import com.t_knight.and.capstone.model.TopicTitle;
 
 public class TopicDescriptionValueEventListener implements ValueEventListener {
 

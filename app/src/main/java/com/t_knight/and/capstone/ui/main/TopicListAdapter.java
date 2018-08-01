@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.model.TopicList;
-import com.t_knight.and.capstone.model.Topics.TopicTitle;
+import com.t_knight.and.capstone.model.TopicTitle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
