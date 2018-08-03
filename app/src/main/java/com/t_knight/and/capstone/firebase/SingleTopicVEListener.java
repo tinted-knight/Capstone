@@ -13,7 +13,7 @@ public class SingleTopicVEListener implements ValueEventListener {
 
     private final MutableLiveData<Topic> data;
 
-    public SingleTopicVEListener(MutableLiveData<Topic> data) {
+    SingleTopicVEListener(MutableLiveData<Topic> data) {
         this.data = data;
     }
 

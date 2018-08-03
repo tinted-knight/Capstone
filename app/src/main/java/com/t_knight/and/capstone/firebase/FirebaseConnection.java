@@ -41,7 +41,7 @@ public class FirebaseConnection {
     }
 
     public LiveData<Topic> getTopicById(Integer id) {
-        Query query = dbRef.child("content").child(String.valueOf(id));
+        Query query = dbRef.child("topics").child(String.valueOf(id));
         MutableLiveData<Topic> topic;
         topic = new MutableLiveData<>();
         query.addListenerForSingleValueEvent(new SingleTopicVEListener(topic));

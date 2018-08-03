@@ -35,9 +35,8 @@ public class TopicDetailsFragment extends Fragment {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     private MainViewModel viewModel;
-    private int topicId;
 
-    public SingleLiveEvent<Integer> btnReadClick = new SingleLiveEvent<>();
+    public SingleLiveEvent<TopicTitle> btnReadClick = new SingleLiveEvent<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,12 +48,6 @@ public class TopicDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_topic_details, container, false);
         ButterKnife.bind(this, rootView);
-
-        btnRead.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                btnReadClick.setValue(topicId);
-            }
-        });
 
         return rootView;
     }
@@ -72,10 +65,19 @@ public class TopicDetailsFragment extends Fragment {
                     toolbar.setTitle(topicTitle.getTitleTo());
                     tvDescription.setText(topicTitle.getDescription());
                     tvDescription2.setText(topicTitle.getTitleFrom());
-                    topicId = topicTitle.getId();
+                    btnReadClick(topicTitle);
                 }
             }
         });
+    }
+
+    private void btnReadClick(final TopicTitle topicTitle) {
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                btnReadClick.setValue(topicTitle);
+            }
+        });
+
     }
 
     @Override

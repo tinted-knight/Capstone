@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    private void startReadActivity(TopicTitle topicTitle) {
+        Intent readIntent = new Intent(MainActivity.this, ReadActivity.class);
+        readIntent.putExtra(ReadActivity.EXTRA_TOPIC_ID, topicTitle);
+        startActivity(readIntent);
+    }
+
     @Override public void onTopicListItemClick(TopicTitle topicTitle) {
         viewModel.setActiveTopic(topicTitle.getId());
         TopicDetailsFragment fragment = new TopicDetailsFragment();
@@ -54,12 +60,9 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.flMain, fragment, TopicDetailsFragment.class.getSimpleName())
                 .commit();
 
-        fragment.btnReadClick.observe(this, new Observer<Integer>() {
-            @Override public void onChanged(@Nullable Integer topicId) {
-                Intent readIntent = new Intent(MainActivity.this, ReadActivity.class);
-                readIntent.putExtra(ReadActivity.EXTRA_TOPIC_ID, topicId);
-                startActivity(readIntent);
-//                Toast.makeText(MainActivity.this, "read click: " + String.valueOf(topicId), Toast.LENGTH_SHORT).show();
+        fragment.btnReadClick.observe(this, new Observer<TopicTitle>() {
+            @Override public void onChanged(@Nullable TopicTitle value) {
+                if (value != null) startReadActivity(value);
             }
         });
     }

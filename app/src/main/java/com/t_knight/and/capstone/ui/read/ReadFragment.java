@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.model.SingleCard;
 import com.t_knight.and.capstone.model.Topic;
 
 import butterknife.BindView;
@@ -50,8 +51,18 @@ public class ReadFragment extends Fragment {
         viewModel.getTopicContent().observe(this, new Observer<Topic>() {
             @Override public void onChanged(@Nullable Topic topic) {
                 if (topic != null) {
-                    tvTo.setText(topic.getTitleTo());
-                    tvFrom.setText(topic.getTitleFrom());
+                    viewModel.showFirstCard();
+//                    tvTo.setText(topic.getCardContent().get(1).getTo());
+//                    tvFrom.setText(topic.getCardContent().get(1).getFrom());
+                }
+            }
+        });
+
+        viewModel.getCardContent().observe(this, new Observer<SingleCard>() {
+            @Override public void onChanged(@Nullable SingleCard singleCard) {
+                if (singleCard != null) {
+                    tvTo.setText(singleCard.getTo());
+                    tvFrom.setText(singleCard.getFrom());
                 }
             }
         });
