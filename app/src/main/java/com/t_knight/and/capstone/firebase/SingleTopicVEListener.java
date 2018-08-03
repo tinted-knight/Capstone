@@ -8,24 +8,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.t_knight.and.capstone.model.Topic;
-import com.t_knight.and.capstone.model.TopicContentList;
 
-class TopicValueEventListener implements ValueEventListener {
+public class SingleTopicVEListener implements ValueEventListener {
 
-    private final MutableLiveData<TopicContentList> data;
+    private final MutableLiveData<Topic> data;
 
-    TopicValueEventListener(MutableLiveData<TopicContentList> data) {
+    public SingleTopicVEListener(MutableLiveData<Topic> data) {
         this.data = data;
     }
 
     @Override public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        TopicContentList topicList = new TopicContentList();
-        for (DataSnapshot snapshot : dataSnapshot.getChildren())
-            topicList.add(snapshot.getValue(Topic.class));
-        if (topicList.size() > 0) data.setValue(topicList);
+        data.setValue(dataSnapshot.getValue(Topic.class));
     }
 
     @Override public void onCancelled(@NonNull DatabaseError databaseError) {
         Log.d("TAGG", "onCancelled: " + databaseError.toString());
     }
+
 }

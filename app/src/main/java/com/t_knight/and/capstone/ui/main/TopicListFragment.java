@@ -60,12 +60,12 @@ public class TopicListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_topic_list, container, false);
 
         ButterKnife.bind(this, rootView);
-        recyclerVIewPrepare();
+        recyclerViewPrepare();
 
         return rootView;
     }
 
-    private void recyclerVIewPrepare() {
+    private void recyclerViewPrepare() {
         adapter = new TopicListAdapter((TopicListAdapter.TopicListItemClick) getActivity());
         rvTopicList.setLayoutManager(
                 new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

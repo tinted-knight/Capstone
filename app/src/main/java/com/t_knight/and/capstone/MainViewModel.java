@@ -24,7 +24,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        repo = new FirebaseConnection();
+        repo = FirebaseConnection.getInstance();
     }
 
     public void setActiveTopic(int id) {

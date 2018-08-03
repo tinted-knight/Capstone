@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.MainViewModel;
@@ -29,9 +30,14 @@ public class TopicDetailsFragment extends Fragment {
 
     @BindView(R.id.tv_description) TextView tvDescription;
     @BindView(R.id.tv_description2) TextView tvDescription2;
+    @BindView(R.id.btn_read) Button btnRead;
+    @BindView(R.id.btn_quiz) Button btnQuiz;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     private MainViewModel viewModel;
+    private int topicId;
+
+    public SingleLiveEvent<Integer> btnReadClick = new SingleLiveEvent<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,12 @@ public class TopicDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_topic_details, container, false);
         ButterKnife.bind(this, rootView);
+
+        btnRead.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                btnReadClick.setValue(topicId);
+            }
+        });
 
         return rootView;
     }
@@ -60,6 +72,7 @@ public class TopicDetailsFragment extends Fragment {
                     toolbar.setTitle(topicTitle.getTitleTo());
                     tvDescription.setText(topicTitle.getDescription());
                     tvDescription2.setText(topicTitle.getTitleFrom());
+                    topicId = topicTitle.getId();
                 }
             }
         });
