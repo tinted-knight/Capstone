@@ -18,6 +18,12 @@
         </activity>
         <activity android:name=".ui.read.ReadActivity">
         </activity>
+        <activity android:name=".ui.quiz.QuizActivity">
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

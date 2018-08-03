@@ -21,7 +21,7 @@ public class ReadViewModel extends AndroidViewModel {
 
     private static final String TAG = "TAGG";
 
-    private final FirebaseConnection repo;
+    //    private final FirebaseConnection repo;
     private final TopicTitle topicTitle;
     private LiveData<Topic> topicContent;
     private int currentCard;
@@ -30,11 +30,11 @@ public class ReadViewModel extends AndroidViewModel {
 
     private ReadViewModel(@NonNull Application application, FirebaseConnection repository, TopicTitle topicTitle) {
         super(application);
-        repo = repository;
+//        repo = repository;
         this.topicTitle = topicTitle;
         navBtnState = new NavigationButtonsLiveData();
         singleCard = new MutableLiveData<>();
-        topicContent = repo.getTopicById(topicTitle.getId());
+        topicContent = repository.getTopicById(topicTitle.getId());
     }
 
     public void navigateNextCard() {
