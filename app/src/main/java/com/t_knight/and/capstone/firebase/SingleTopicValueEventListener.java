@@ -9,11 +9,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.t_knight.and.capstone.model.Topic;
 
-public class SingleTopicVEListener implements ValueEventListener {
+public class SingleTopicValueEventListener implements ValueEventListener {
 
     private final MutableLiveData<Topic> data;
 
-    SingleTopicVEListener(MutableLiveData<Topic> data) {
+    SingleTopicValueEventListener(MutableLiveData<Topic> data) {
         this.data = data;
     }
 

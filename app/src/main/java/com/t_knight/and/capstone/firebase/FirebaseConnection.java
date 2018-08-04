@@ -9,6 +9,7 @@ import com.google.firebase.database.Query;
 import com.t_knight.and.capstone.model.Topic;
 import com.t_knight.and.capstone.model.TopicContentList;
 import com.t_knight.and.capstone.model.TopicList;
+import com.t_knight.and.capstone.model.quiz.Quiz;
 
 public class FirebaseConnection {
 
@@ -44,7 +45,7 @@ public class FirebaseConnection {
         Query query = dbRef.child("topics").child(String.valueOf(id));
         MutableLiveData<Topic> topic;
         topic = new MutableLiveData<>();
-        query.addListenerForSingleValueEvent(new SingleTopicVEListener(topic));
+        query.addListenerForSingleValueEvent(new SingleTopicValueEventListener(topic));
 
         return topic;
     }
@@ -56,6 +57,14 @@ public class FirebaseConnection {
         query.addListenerForSingleValueEvent(new TopicDescriptionValueEventListener(topicList));
 
         return topicList;
+    }
+
+    public LiveData<Quiz> getQuizById(int id) {
+        Query query = dbRef.child("quizes").child(String.valueOf(id));
+        MutableLiveData<Quiz> quiz = new MutableLiveData<>();
+        query.addListenerForSingleValueEvent(new QuizValueEventListener(quiz));
+
+        return quiz;
     }
 
 }

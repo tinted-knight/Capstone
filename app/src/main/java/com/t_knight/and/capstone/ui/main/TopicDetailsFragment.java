@@ -37,6 +37,7 @@ public class TopicDetailsFragment extends Fragment {
     private MainViewModel viewModel;
 
     public SingleLiveEvent<TopicTitle> btnReadClick = new SingleLiveEvent<>();
+    public SingleLiveEvent<Integer> btnQuizClick = new SingleLiveEvent<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,11 @@ public class TopicDetailsFragment extends Fragment {
             }
         });
 
+        btnQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                btnQuizClick.setValue(topicTitle.getId());
+            }
+        });
     }
 
     @Override

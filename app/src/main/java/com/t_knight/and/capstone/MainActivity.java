@@ -15,6 +15,7 @@ import com.t_knight.and.capstone.model.TopicTitle;
 import com.t_knight.and.capstone.ui.main.TopicDetailsFragment;
 import com.t_knight.and.capstone.ui.main.TopicListAdapter;
 import com.t_knight.and.capstone.ui.main.TopicListFragment;
+import com.t_knight.and.capstone.ui.quiz.QuizActivity;
 import com.t_knight.and.capstone.ui.read.ReadActivity;
 
 import butterknife.BindView;
@@ -45,12 +46,6 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    private void startReadActivity(TopicTitle topicTitle) {
-        Intent readIntent = new Intent(MainActivity.this, ReadActivity.class);
-        readIntent.putExtra(ReadActivity.EXTRA_TOPIC_ID, topicTitle);
-        startActivity(readIntent);
-    }
-
     @Override public void onTopicListItemClick(TopicTitle topicTitle) {
         viewModel.setActiveTopic(topicTitle.getId());
         TopicDetailsFragment fragment = new TopicDetailsFragment();
@@ -60,11 +55,33 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.flMain, fragment, TopicDetailsFragment.class.getSimpleName())
                 .commit();
 
+        setupBtnClickListeners(fragment);
+    }
+
+    private void setupBtnClickListeners(TopicDetailsFragment fragment) {
         fragment.btnReadClick.observe(this, new Observer<TopicTitle>() {
             @Override public void onChanged(@Nullable TopicTitle value) {
                 if (value != null) startReadActivity(value);
             }
         });
+
+        fragment.btnQuizClick.observe(this, new Observer<Integer>() {
+            @Override public void onChanged(@Nullable Integer value) {
+                if (value != null) startQuizActivity(value);
+            }
+        });
+    }
+
+    private void startReadActivity(TopicTitle topicTitle) {
+        Intent readIntent = new Intent(this, ReadActivity.class);
+        readIntent.putExtra(ReadActivity.EXTRA_TOPIC_ID, topicTitle);
+        startActivity(readIntent);
+    }
+
+    private void startQuizActivity(Integer id) {
+        Intent quizIntent = new Intent(this, QuizActivity.class);
+        quizIntent.putExtra(QuizActivity.EXTRA_TOPIC_ID, id);
+        startActivity(quizIntent);
     }
 
     @Override public void onTopicDetailsFragmentInteraction(Uri uri) {

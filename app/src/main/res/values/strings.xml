@@ -6,5 +6,6 @@
 
     <!-- Layout editor dummies-->
     <string name="test_quiz_string">When we go for an interview, most of us think carefully about what to wear and what to say but hardly ever about how to act – in other words, what our body language is telling the interviewer.</string>
+    <string name="test_quiz_string2">When we go for an interview.</string>
     <string name="test_quiz_title">Когда мы идем на интервью, большинство из нас думают [внимательно] о том, что одеть и что говорить, но едва ли о том, как себя вести, другими словами - что наш язык тела говорит интервьюеру.</string>
 </resources>
