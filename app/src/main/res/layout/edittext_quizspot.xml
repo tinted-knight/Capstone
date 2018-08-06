@@ -1,0 +1,12 @@
+<EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.QuizText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/quizspot_background"
+    android:cursorVisible="true"
+    android:ems="10"
+    android:inputType="text"
+    android:textColor="#ffffffff"
+    tools:text="body" />
