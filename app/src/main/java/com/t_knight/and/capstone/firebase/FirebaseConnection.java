@@ -19,6 +19,7 @@ public class FirebaseConnection {
     private final MutableLiveData<TopicList> topicList;
 
     private static FirebaseConnection instance;
+    private FirebaseDatabase database;
 
     public static FirebaseConnection getInstance() {
         if (instance == null)
@@ -27,7 +28,10 @@ public class FirebaseConnection {
     }
 
     private FirebaseConnection() {
-        dbRef = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance();
+//        database.setPersistenceEnabled(true);
+//        dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef = database.getReference();
         topicList = new MutableLiveData<>();
     }
 

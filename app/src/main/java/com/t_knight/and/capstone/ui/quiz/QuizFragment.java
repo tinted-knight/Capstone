@@ -10,8 +10,6 @@ import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +38,14 @@ import butterknife.ButterKnife;
  */
 public class QuizFragment extends Fragment {
 
+    private static final String TAG = "tagg";
+
     @BindView(R.id.tv_quiz) QuizTextView tvQuiz;
     @BindView(R.id.btn_enter) Button btnEnter;
     @BindView(R.id.tv_hint) TextView tvHint;
     @BindView(R.id.fl_quiz_card) FrameLayout flQuizCard;
 
-    private List<EditText> quizAnswers;
+    private List<EditText> etQuizAnswers;
     private QuizViewModel viewModel;
 
     public QuizFragment() {
@@ -60,15 +60,17 @@ public class QuizFragment extends Fragment {
 
         btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                viewModel.navigateNextCard();
+                List<String> answers = new ArrayList<>(etQuizAnswers.size());
+                for (EditText answer : etQuizAnswers)
+                    answers.add(answer.getText().toString().trim());
+                viewModel.checkAnswers(answers);
             }
         });
-        tvHint.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                viewModel.navigatePreviousCard();
-            }
-        });
-
+//        tvHint.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                viewModel.navigatePreviousCard();
+//            }
+//        });
         return rootView;
     }
 
@@ -80,7 +82,7 @@ public class QuizFragment extends Fragment {
 
     private void registerObservers() {
         viewModel.getCurrentQuizCard().observe(this, new Observer<QuizCard>() {
-            @Override public void onChanged(@Nullable QuizCard quizCard) {
+            @Override public void onChanged(@Nullable final QuizCard quizCard) {
                 if (quizCard != null) {
                     tvQuiz.setQuizSpots(quizCard.getSpots());
                     hideQuizSpots(quizCard);
@@ -89,44 +91,95 @@ public class QuizFragment extends Fragment {
                 }
             }
         });
+
+        viewModel.getAnswersCheckResult().observe(this, new Observer<List<String>>() {
+            @Override public void onChanged(@Nullable List<String> hints) {
+                if (hints != null) {
+                    boolean allCorrect = true;
+                    int i = 0;
+                    for (String hint : hints) {
+                        if (hint != null) {
+                            allCorrect = false;
+                            highlightError(etQuizAnswers.get(i), hint);
+                        } else {
+                            highlightCorrect(etQuizAnswers.get(i));
+                        }
+                        i++;
+                    }
+                    if (allCorrect) navigateNextWithDelay();
+                }
+            }
+
+            // TODO custom EditText
+            private void highlightError(EditText editText, String hint) {
+                editText.setText(hint);
+                editText.setBackgroundColor(Color.RED);
+            }
+
+            private void highlightCorrect(EditText editText) {
+                editText.setBackgroundColor(Color.GREEN);
+            }
+        });
+    }
+
+    private void navigateNextWithDelay() {
+        Thread thread = new Thread() {
+            @Override public void run() {
+                super.run();
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override public void run() {
+                            viewModel.navigateNextCard();
+                        }
+                    });
+            }
+        };
+        thread.start();
     }
 
     private void showQuizEditTexts() {
-        clearQuizSpotViews();
+        clearQuizView();
         // https://stackoverflow.com/questions/7733813/how-can-you-tell-when-a-layout-has-been-drawn
         tvQuiz.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
                 tvQuiz.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
                 LayoutInflater inflater = getLayoutInflater();
-                quizAnswers = new ArrayList<>(tvQuiz.getQuizSpotRects().size());
+                etQuizAnswers = new ArrayList<>(tvQuiz.getQuizSpotRects().size());
+                int i = 0;
                 for (QuizSpotRect quizSpot : tvQuiz.getQuizSpotRects()) {
                     EditText etQuiz = (EditText)
                             inflater.inflate(R.layout.edittext_quizspot, flQuizCard, false);
                     etQuiz.setFilters(new InputFilter[]{
                             new InputFilter.LengthFilter(quizSpot.getWordLength())});
                     quizSpot.adjustOffset(tvQuiz);
-                    adjustCoordinates(etQuiz, quizSpot);
                     etQuiz.addOnLayoutChangeListener(new QuizEditTextLayoutChangeListener(quizSpot));
+                    etQuiz.setTag(i++);
+                    etQuiz.setOnFocusChangeListener(etClick);
 
                     flQuizCard.addView(etQuiz);
-                    quizAnswers.add(etQuiz);
+                    etQuizAnswers.add(etQuiz);
                 }
-            }
-
-            private void adjustCoordinates(EditText etQuiz, QuizSpotRect quizSpot) {
-                etQuiz.setLeft(quizSpot.getLeft());
-                etQuiz.setRight(quizSpot.getRight());
-                etQuiz.setTop(quizSpot.getTop());
-                etQuiz.setBottom(quizSpot.getBottom());
             }
         });
     }
 
-    private void clearQuizSpotViews() {
-        if (quizAnswers != null)
-            for (View v : quizAnswers)
+    private View.OnFocusChangeListener etClick = new View.OnFocusChangeListener() {
+        @Override public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus) tvHint.setText(viewModel.getQuizHint((Integer) v.getTag()));
+        }
+    };
+
+    private void clearQuizView() {
+        if (etQuizAnswers != null)
+            for (View v : etQuizAnswers)
                 flQuizCard.removeView(v);
+        tvHint.setText("");
     }
 
     private void hideQuizSpots(QuizCard quizCard) {
@@ -140,7 +193,5 @@ public class QuizFragment extends Fragment {
             );
         }
         tvQuiz.setText(ss);
-//        tvQuiz.setMovementMethod(LinkMovementMethod.getInstance());
-//        tvQuiz.setHighlightColor(Color.RED);
     }
 }
