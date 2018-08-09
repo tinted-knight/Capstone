@@ -52,20 +52,6 @@ public class QuizViewModel extends AndroidViewModel {
         }
     }
 
-    public void navigateNextCardWithDelay() {
-        Thread t = new Thread() {
-            @Override public void run() {
-                super.run();
-                try {
-                    sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-    }
-
     public void navigateNextCard() {
         List<QuizCard> cardList = quiz.getValue().getCards();
         if (cardList.size() > currentCardId + 1) {

@@ -66,11 +66,17 @@ public class QuizFragment extends Fragment {
                 viewModel.checkAnswers(answers);
             }
         });
-//        tvHint.setOnClickListener(new View.OnClickListener() {
-//            @Override public void onClick(View v) {
-//                viewModel.navigatePreviousCard();
-//            }
-//        });
+        tvHint.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                viewModel.navigateNextCard();
+            }
+        });
+        tvHint.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                viewModel.navigatePreviousCard();
+                return true;
+            }
+        });
         return rootView;
     }
 
@@ -110,10 +116,10 @@ public class QuizFragment extends Fragment {
                 }
             }
 
-            // TODO custom EditText
+            // TODO move to custom EditText
             private void highlightError(EditText editText, String hint) {
-                editText.setText(hint);
-                editText.setBackgroundColor(Color.RED);
+                editText.setHint(hint);
+                editText.setHintTextColor(Color.RED);
             }
 
             private void highlightCorrect(EditText editText) {
