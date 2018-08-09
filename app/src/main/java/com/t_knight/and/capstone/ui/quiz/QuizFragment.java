@@ -166,13 +166,26 @@ public class QuizFragment extends Fragment {
                     quizSpot.adjustOffset(tvQuiz);
                     etQuiz.addOnLayoutChangeListener(new QuizEditTextLayoutChangeListener(quizSpot));
                     etQuiz.setTag(i++);
+                    etQuiz.setId(View.generateViewId());
                     etQuiz.setOnFocusChangeListener(etClick);
 
                     flQuizCard.addView(etQuiz);
                     etQuizAnswers.add(etQuiz);
                 }
+                reorderEditTextsForNavigation();
             }
         });
+    }
+
+    private void reorderEditTextsForNavigation() {
+        int maxId = etQuizAnswers.size() - 1;
+        for (int  i = 0; i < maxId; i++) {
+            int nextId = etQuizAnswers.get(i + 1).getId();
+            etQuizAnswers.get(i).setNextFocusForwardId(nextId);
+        }
+        // From last jump to first
+        int firstId = etQuizAnswers.get(0).getId();
+        etQuizAnswers.get(maxId).setNextFocusForwardId(firstId);
     }
 
     private View.OnFocusChangeListener etClick = new View.OnFocusChangeListener() {
