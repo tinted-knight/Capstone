@@ -59,4 +59,8 @@ public class TopicListRepo {
 //        });
 //    }
 
+    public List<TopicEntity> getAll() {
+        return dao.getAll();
+    }
+
 }

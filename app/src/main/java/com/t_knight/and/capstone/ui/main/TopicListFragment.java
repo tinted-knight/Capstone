@@ -84,8 +84,10 @@ public class TopicListFragment extends Fragment {
         viewModel.getTopicTitles().observe(this, new Observer<TopicList>() {
             @Override public void onChanged(@Nullable TopicList topicTitles) {
                 adapter.setData(topicTitles);
-                if (new FirstStartPreference(getActivity()).getValue()) {
+                FirstStartPreference firstStart = new FirstStartPreference(getActivity());
+                if (firstStart.isTrue()) {
                     viewModel.fillLocalDatabase();
+                    firstStart.setFalse();
                 }
             }
         });
