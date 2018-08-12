@@ -6,15 +6,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
-import com.t_knight.and.capstone.model.TopicTitle;
 import com.t_knight.and.capstone.model.quiz.Quiz;
 import com.t_knight.and.capstone.model.quiz.QuizCard;
-import com.t_knight.and.capstone.model.quiz.QuizSpot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +40,7 @@ public class QuizViewModel extends AndroidViewModel {
         QuizVMFactory(Application application, int topicId) {
             this.application = application;
             this.topicId = topicId;
-            repository = FirebaseConnection.getInstance();
+            repository = FirebaseConnection.getInstance(application);
         }
 
         @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

@@ -7,9 +7,12 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
+import com.t_knight.and.capstone.local_db.TopicListRepo;
 import com.t_knight.and.capstone.model.TopicList;
 import com.t_knight.and.capstone.model.TopicContentList;
 import com.t_knight.and.capstone.model.TopicTitle;
+
+import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -24,7 +27,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        repo = FirebaseConnection.getInstance();
+        repo = FirebaseConnection.getInstance(application);
     }
 
     public void setActiveTopic(int id) {
@@ -45,6 +48,12 @@ public class MainViewModel extends AndroidViewModel {
         // TODO if (topicList != null) return topicList
         topicList = repo.getAllTopicsDescription();
         return topicList;
+    }
+
+    public void fillLocalDatabase() {
+        if (topicList != null && topicList.getValue() != null && topicList.getValue().size() > 0) {
+            repo.fillDatabase(topicList.getValue());
+        }
     }
 
 }

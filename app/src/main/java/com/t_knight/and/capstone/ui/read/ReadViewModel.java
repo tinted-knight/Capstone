@@ -94,7 +94,7 @@ public class ReadViewModel extends AndroidViewModel {
         ReadVMFactory(Application application, TopicTitle topicTitle) {
             this.application = application;
             this.topicTitle = topicTitle;
-            repository = FirebaseConnection.getInstance();
+            repository = FirebaseConnection.getInstance(application);
         }
 
         @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
