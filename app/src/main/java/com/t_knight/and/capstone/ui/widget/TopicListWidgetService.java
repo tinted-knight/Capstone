@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
 
@@ -17,6 +18,7 @@ import timber.log.Timber;
 public class TopicListWidgetService extends IntentService {
 
     public static final String ACTION_UPDATE_WIDGET = "com.t_knight.and.capstone.update_widget";
+    public static final String ACTION_UPDATE_LIST = "com.t_knight.and.capstone.update_list";
 
     public TopicListWidgetService() {
         super("TopicListWidgetService");
@@ -28,13 +30,30 @@ public class TopicListWidgetService extends IntentService {
         context.startService(intent);
     }
 
+    public static void startActionUpdateList(Context context) {
+        Intent intent = new Intent(context, TopicListWidgetService.class);
+        intent.setAction(ACTION_UPDATE_LIST);
+        context.startService(intent);
+    }
+
     @Override protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             String action = intent.getAction();
             if (ACTION_UPDATE_WIDGET.equals(action)) {
                 doActionUpdateWidget();
+            } else if (ACTION_UPDATE_LIST.equals(action)) {
+                doActionUpdateList();
             }
         }
+    }
+
+    private void doActionUpdateList() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+                new ComponentName(this, TopicListWidget.class));
+        Timber.i("doActionUpdateList");
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lv_topic_list);
+        TopicListWidget.updateAppWidgetsList(this, appWidgetManager, appWidgetIds);
     }
 
     private void doActionUpdateWidget() {

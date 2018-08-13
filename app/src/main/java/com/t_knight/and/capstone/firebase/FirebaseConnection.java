@@ -38,9 +38,9 @@ public class FirebaseConnection {
 
     private FirebaseConnection(Context context) {
         database = FirebaseDatabase.getInstance();
-//        database.setPersistenceEnabled(true);
-//        dbRef = FirebaseDatabase.getInstance().getReference();
+        database.setPersistenceEnabled(true);
         dbRef = database.getReference();
+        dbRef.keepSynced(true);
         local = new TopicListRepo(context);
         topicList = new MutableLiveData<>();
     }

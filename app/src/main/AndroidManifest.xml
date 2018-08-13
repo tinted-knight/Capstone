@@ -39,6 +39,10 @@
         <service
             android:name=".ui.widget.TopicListWidgetService" />
 
+        <service
+            android:name=".ui.widget.TopicListRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>
