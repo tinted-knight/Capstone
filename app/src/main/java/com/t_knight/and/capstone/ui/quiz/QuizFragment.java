@@ -90,8 +90,10 @@ public class QuizFragment extends Fragment {
         viewModel.getCurrentQuizCard().observe(this, new Observer<QuizCard>() {
             @Override public void onChanged(@Nullable final QuizCard quizCard) {
                 if (quizCard != null) {
-                    tvQuiz.setQuizSpots(quizCard.getSpots());
-                    hideQuizSpots(quizCard);
+                    tvQuiz.setQuizSpots(quizCard.getSpots().subList(0, viewModel.getDifficulty()));
+                    hideQuizSpots(
+                            quizCard.getText(),
+                            quizCard.getSpots().subList(0, viewModel.getDifficulty()));
 //                    tvQuiz.setText(quizCard.getText());
                     showQuizEditTexts();
                 }
@@ -118,6 +120,7 @@ public class QuizFragment extends Fragment {
 
             // TODO move to custom EditText
             private void highlightError(EditText editText, String hint) {
+                editText.setText("");
                 editText.setHint(hint);
                 editText.setHintTextColor(Color.RED);
             }
@@ -179,7 +182,7 @@ public class QuizFragment extends Fragment {
 
     private void reorderEditTextsForNavigation() {
         int maxId = etQuizAnswers.size() - 1;
-        for (int  i = 0; i < maxId; i++) {
+        for (int i = 0; i < maxId; i++) {
             int nextId = etQuizAnswers.get(i + 1).getId();
             etQuizAnswers.get(i).setNextFocusForwardId(nextId);
         }
@@ -201,9 +204,9 @@ public class QuizFragment extends Fragment {
         tvHint.setText("");
     }
 
-    private void hideQuizSpots(QuizCard quizCard) {
-        SpannableString ss = new SpannableString(quizCard.getText() + "\n ");
-        for (QuizSpot spot : quizCard.getSpots()) {
+    private void hideQuizSpots(String quizString, List<QuizSpot> spots) {
+        SpannableString ss = new SpannableString(quizString + "\n ");
+        for (QuizSpot spot : spots) {
             ss.setSpan(
                     new ForegroundColorSpan(Color.TRANSPARENT),
                     spot.getStart(),

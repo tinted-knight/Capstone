@@ -50,15 +50,13 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
     }
 
     public interface TopicListItemClick {
-
         void onTopicListItemClick(TopicTitle topicTitle);
     }
 
     class TopicListViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvTitle) TextView tvTitle;
-        @BindView(R.id.tvPosterUrl) TextView tvPosterUrl;
-        @BindView(R.id.tvDescription) TextView tvDescription;
+        @BindView(R.id.tv_description) TextView tvDescription;
 
         TopicListViewHolder(final View itemView) {
             super(itemView);
@@ -73,8 +71,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
 
         void bind(TopicTitle topicTitle) {
             tvTitle.setText(topicTitle.getTitleFrom());
-            tvPosterUrl.setText(topicTitle.getCoverUrl());
-            tvDescription.setText(topicTitle.getDescription());
+            tvDescription.setText(topicTitle.getTitleTo());
         }
     }
 }

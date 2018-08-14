@@ -18,6 +18,9 @@ import butterknife.ButterKnife;
 public class QuizActivity extends AppCompatActivity {
 
     public static final String EXTRA_TOPIC_ID = "topic_id";
+    public static final String EXTRA_DIFFICULTY_LEVEL = "difficulty_level";
+    private static final int TOPIC_ID_DEFAULT = 1;
+    private static final int DIFFICULTY_LEVEL_DEFAULT = 1;
 
     @BindView(R.id.tv_translation) TextView tvTranslation;
 
@@ -31,9 +34,10 @@ public class QuizActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            int topicId = intent.getIntExtra(EXTRA_TOPIC_ID, 0);
+            int topicId = intent.getIntExtra(EXTRA_TOPIC_ID, TOPIC_ID_DEFAULT);
+            int difficulty = intent.getIntExtra(EXTRA_DIFFICULTY_LEVEL, DIFFICULTY_LEVEL_DEFAULT);
             QuizViewModel.QuizVMFactory factory =
-                    new QuizViewModel.QuizVMFactory(getApplication(), topicId);
+                    new QuizViewModel.QuizVMFactory(getApplication(), topicId, difficulty);
             viewModel = ViewModelProviders.of(this, factory).get(QuizViewModel.class);
             showQuizFragment();
             registerObservers();

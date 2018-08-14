@@ -3,26 +3,35 @@ package com.t_knight.and.capstone.ui.main;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.model.TopicTitle;
 
+import java.util.List;
+
+import butterknife.BindDrawable;
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TopicDetailsFragment extends Fragment {
 
@@ -33,11 +42,17 @@ public class TopicDetailsFragment extends Fragment {
     @BindView(R.id.btn_read) Button btnRead;
     @BindView(R.id.btn_quiz) Button btnQuiz;
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.ratingBar) RatingBar ratingBar;
 
+    private static final int DIF_LEVEL_1 = 1;
+    private static final int DIF_LEVEL_2 = 2;
+    private static final int DIF_LEVEL_3 = 3;
+    private static final int DIF_LEVEL_4 = 4;
+    private int difficultyLevel;
     private MainViewModel viewModel;
 
     public SingleLiveEvent<TopicTitle> btnReadClick = new SingleLiveEvent<>();
-    public SingleLiveEvent<Integer> btnQuizClick = new SingleLiveEvent<>();
+    public SingleLiveEvent<Pair<Integer, Integer>> btnQuizClick = new SingleLiveEvent<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +96,16 @@ public class TopicDetailsFragment extends Fragment {
 
         btnQuiz.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                btnQuizClick.setValue(topicTitle.getId());
+//                btnQuizClick.setValue(topicTitle.getId());
+                btnQuizClick.setValue(new Pair<>(topicTitle.getId(), Math.round(ratingBar.getRating())));
             }
         });
+    }
+
+    public void ratingBarClick(View view) {
+        if (view.getId() == R.id.ratingBar) {
+            difficultyLevel = Math.round(ratingBar.getRating());
+        }
     }
 
     @Override

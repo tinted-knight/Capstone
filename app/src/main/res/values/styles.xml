@@ -8,6 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Topic List Screen-->
+    <style name="AppTheme.TopicTitle" parent="TextAppearance.AppCompat.Title">
+    </style>
+
+    <style name="AppTheme.TopicDescription" parent="TextAppearance.AppCompat.Small">
+        <!--<item name="android:textSize">14sp</item>-->
+    </style>
+
+    <!--Read Screen-->
+    <style name="AppTheme.ReadTextView" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.25</item>
+    </style>
+
+    <!--Quiz Screen-->
     <style name="AppTheme.QuizText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">16sp</item>
     </style>

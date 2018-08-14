@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -65,9 +66,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        fragment.btnQuizClick.observe(this, new Observer<Integer>() {
-            @Override public void onChanged(@Nullable Integer value) {
-                if (value != null) startQuizActivity(value);
+        fragment.btnQuizClick.observe(this, new Observer<Pair<Integer, Integer>>() {
+            @Override public void onChanged(@Nullable Pair<Integer, Integer> value) {
+                if (value != null) startQuizActivity(value.first, value.second);
             }
         });
     }
@@ -78,9 +79,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(readIntent);
     }
 
-    private void startQuizActivity(Integer id) {
+    private void startQuizActivity(Integer id, Integer difficulty) {
         Intent quizIntent = new Intent(this, QuizActivity.class);
         quizIntent.putExtra(QuizActivity.EXTRA_TOPIC_ID, id);
+        quizIntent.putExtra(QuizActivity.EXTRA_DIFFICULTY_LEVEL, difficulty);
         startActivity(quizIntent);
     }
 

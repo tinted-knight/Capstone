@@ -20,32 +20,17 @@ public class QuizViewModel extends AndroidViewModel {
     private LiveData<Quiz> quiz;
     private MutableLiveData<QuizCard> currentQuizCard;
     private int currentCardId;
+    private final int difficulty;
 
     //    private List<String> answers;
     private MutableLiveData<List<String>> answersCheckResult;
 
-    private QuizViewModel(@NonNull Application application, FirebaseConnection repository, int topicId) {
+    private QuizViewModel(@NonNull Application application, FirebaseConnection repository, int topicId, int difficulty) {
         super(application);
         quiz = repository.getQuizById(topicId);
         currentQuizCard = new MutableLiveData<>();
         answersCheckResult = new MutableLiveData<>();
-    }
-
-    public static class QuizVMFactory extends ViewModelProvider.NewInstanceFactory {
-
-        private final Application application;
-        private final int topicId;
-        private final FirebaseConnection repository;
-
-        QuizVMFactory(Application application, int topicId) {
-            this.application = application;
-            this.topicId = topicId;
-            repository = FirebaseConnection.getInstance(application);
-        }
-
-        @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new QuizViewModel(application, repository, topicId);
-        }
+        this.difficulty = difficulty;
     }
 
     public void navigateNextCard() {
@@ -106,4 +91,28 @@ public class QuizViewModel extends AndroidViewModel {
         if (currentQuizCard.getValue() == null) return "";
         return currentQuizCard.getValue().getSpots().get(i).getHint();
     }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public static class QuizVMFactory extends ViewModelProvider.NewInstanceFactory {
+
+        private final Application application;
+        private final int topicId;
+        private final int difficulty;
+        private final FirebaseConnection repository;
+
+        QuizVMFactory(Application application, int topicId, int difficulty) {
+            this.application = application;
+            this.topicId = topicId;
+            repository = FirebaseConnection.getInstance(application);
+            this.difficulty = difficulty;
+        }
+
+        @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            return (T) new QuizViewModel(application, repository, topicId, difficulty);
+        }
+    }
+
 }
