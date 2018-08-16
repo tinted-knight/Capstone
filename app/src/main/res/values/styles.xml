@@ -12,6 +12,10 @@
     <style name="AppTheme.TopicTitle" parent="TextAppearance.AppCompat.Title">
     </style>
 
+    <style name="AppTheme.CardActionImageButton" parent="Widget.AppCompat.ActionButton">
+        <item name="android:tint">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.TopicDescription" parent="TextAppearance.AppCompat.Small">
         <!--<item name="android:textSize">14sp</item>-->
     </style>

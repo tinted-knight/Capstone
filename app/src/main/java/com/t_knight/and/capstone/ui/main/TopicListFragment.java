@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 
 import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.local_db.TopicEntity;
+import com.t_knight.and.capstone.model.FireContent;
 import com.t_knight.and.capstone.model.TopicTitle;
-import com.t_knight.and.capstone.model.helpers.FirstStartPreference;
+import com.t_knight.and.capstone.model.helpers.AppPreferences;
 
 import java.util.List;
 
@@ -31,9 +33,9 @@ public class TopicListFragment extends Fragment {
     private String mParam2;
 
     private MainViewModel viewModel;
+    private TopicListAdapter adapter;
 
     @BindView(R.id.rvTopicList) RecyclerView rvTopicList;
-    TopicListAdapter adapter;
 
     public TopicListFragment() {
         // Required empty public constructor
@@ -83,14 +85,33 @@ public class TopicListFragment extends Fragment {
     }
 
     private void registerObservers() {
-        viewModel.getTopicTitles().observe(this, new Observer<List<TopicTitle>>() {
-            @Override public void onChanged(@Nullable List<TopicTitle> topicTitles) {
-                adapter.setData(topicTitles);
-                FirstStartPreference firstStart = new FirstStartPreference(getActivity());
-                if (firstStart.isTrue()) {
-                    viewModel.fillLocalDatabase();
-                    firstStart.setFalse();
+        viewModel.loadFromNetwork().observe(this, new Observer<FireContent>() {
+            @Override public void onChanged(@Nullable FireContent content) {
+                if (content != null){
+                    AppPreferences prefs = new AppPreferences(getActivity());
+                    if (prefs.isFirstStart() || prefs.isNewerVersion(content.getVersion())) {
+                        viewModel.fillLocalDatabase();
+                        prefs.setFirstStartFalse();
+                    }
                 }
+            }
+        });
+
+//        viewModel.loadFromNetwork().observe(this, new Observer<List<TopicTitle>>() {
+//            @Override public void onChanged(@Nullable List<TopicTitle> topicTitles) {
+////                adapter.setData(topicTitles);
+//                AppPreferences firstStart = new AppPreferences(getActivity());
+//                if (firstStart.isFirstStart()) {
+//                    viewModel.fillLocalDatabase();
+//                    firstStart.setFirstStartFalse();
+//                }
+//            }
+//        });
+
+        viewModel.getAllTopics().observe(this, new Observer<List<TopicEntity>>() {
+            @Override public void onChanged(@Nullable List<TopicEntity> data) {
+                if (data != null)
+                    adapter.setData(data);
             }
         });
     }

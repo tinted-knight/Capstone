@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.TopicTitle;
 
 import butterknife.BindView;
@@ -33,9 +34,9 @@ public class ReadActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            TopicTitle topicTitle = intent.getParcelableExtra(EXTRA_TOPIC_ID);
+            TopicDescription topic = intent.getParcelableExtra(EXTRA_TOPIC_ID);
             ReadViewModel.ReadVMFactory factory =
-                    new ReadViewModel.ReadVMFactory(getApplication(), topicTitle);
+                    new ReadViewModel.ReadVMFactory(getApplication(), topic);
             viewModel = ViewModelProviders.of(this, factory).get(ReadViewModel.class);
             showReadFragment();
             setupNavigationButtons();

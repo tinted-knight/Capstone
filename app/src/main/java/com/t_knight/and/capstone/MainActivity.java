@@ -18,6 +18,8 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 import com.t_knight.and.capstone.job_dispatcher.TopicListJobService;
+import com.t_knight.and.capstone.local_db.TopicEntity;
+import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.TopicTitle;
 import com.t_knight.and.capstone.ui.main.TopicDetailsFragment;
 import com.t_knight.and.capstone.ui.main.TopicListAdapter;
@@ -34,10 +36,10 @@ public class MainActivity extends AppCompatActivity
         implements TopicListAdapter.TopicListItemClick, TopicDetailsFragment.OnTopicDetailsInteractionListener {
 
     public static final String TAG = "TAGG";
-    //    private static final int periodicity = (int) TimeUnit.HOURS.toSeconds(24); // 3 hours
-//    private static final int interval = (int) TimeUnit.MINUTES.toSeconds(15);
-    private static final int periodicity = (int) TimeUnit.SECONDS.toSeconds(15); // 3 hours
-    private static final int interval = (int) TimeUnit.SECONDS.toSeconds(15);
+        private static final int periodicity = (int) TimeUnit.HOURS.toSeconds(24); // 3 hours
+    private static final int interval = (int) TimeUnit.MINUTES.toSeconds(15);
+//    private static final int periodicity = (int) TimeUnit.SECONDS.toSeconds(15); // 3 hours
+//    private static final int interval = (int) TimeUnit.SECONDS.toSeconds(15);
 
     private MainViewModel viewModel;
 
@@ -79,8 +81,8 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    @Override public void onTopicListItemClick(TopicTitle topicTitle) {
-        viewModel.setActiveTopic(topicTitle.getId());
+    @Override public void onTopicListItemClick(TopicEntity topic) {
+        viewModel.setActiveTopic(topic.topicId);
         TopicDetailsFragment fragment = new TopicDetailsFragment();
         getSupportFragmentManager().beginTransaction()
                 .addToBackStack(null)
@@ -91,9 +93,14 @@ public class MainActivity extends AppCompatActivity
         setupBtnClickListeners(fragment);
     }
 
+    @Override public void onTopicListPinClick(TopicEntity topic) {
+        Toast.makeText(this, "pin topic id = " + String.valueOf(topic.topicId), Toast.LENGTH_SHORT).show();
+        viewModel.pinTopicToWidget(topic);
+    }
+
     private void setupBtnClickListeners(TopicDetailsFragment fragment) {
-        fragment.btnReadClick.observe(this, new Observer<TopicTitle>() {
-            @Override public void onChanged(@Nullable TopicTitle value) {
+        fragment.btnReadClick.observe(this, new Observer<TopicDescription>() {
+            @Override public void onChanged(@Nullable TopicDescription value) {
                 if (value != null) startReadActivity(value);
             }
         });
@@ -105,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void startReadActivity(TopicTitle topicTitle) {
+    private void startReadActivity(TopicDescription topicTitle) {
         Intent readIntent = new Intent(this, ReadActivity.class);
         readIntent.putExtra(ReadActivity.EXTRA_TOPIC_ID, topicTitle);
         startActivity(readIntent);

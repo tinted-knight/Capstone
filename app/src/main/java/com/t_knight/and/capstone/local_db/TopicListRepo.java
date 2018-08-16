@@ -1,9 +1,10 @@
 package com.t_knight.and.capstone.local_db;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import com.t_knight.and.capstone.AppExecutors;
-import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.TopicDescription;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +32,18 @@ public class TopicListRepo {
 //        return instance;
 //    }
 
-    public void fillTopicList(final List<TopicTitle> topicList) {
+    public void fillTopicList(final List<TopicDescription> topicList) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override public void run() {
                 List<TopicEntity> entities;
-                entities = dao.getAll();
+                entities = dao.getAllForWidget();
                 if (entities != null && entities.size() > 0) {
                     dao.clear(entities.toArray(new TopicEntity[]{}));
                     Timber.i("dao clear");
                 }
 
                 entities = new ArrayList<>(topicList.size());
-                for (TopicTitle topic : topicList) {
+                for (TopicDescription topic : topicList) {
                     entities.add(new TopicEntity(topic));
                     Timber.i(topic.getTitleFrom());
                 }
@@ -59,8 +60,21 @@ public class TopicListRepo {
 //        });
 //    }
 
-    public List<TopicEntity> getAll() {
+    public List<TopicEntity> getAllForWidget() {
+        return dao.getAllForWidget();
+    }
+
+    public LiveData<List<TopicEntity>> getAll() {
         return dao.getAll();
     }
 
+    public void pinTopic(final TopicEntity topicEntity) {
+        topicEntity.pinned = true;
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override public void run() {
+                dao.unpinAll();
+                dao.updateTopic(topicEntity);
+            }
+        });
+    }
 }

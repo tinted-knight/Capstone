@@ -3,31 +3,25 @@ package com.t_knight.and.capstone.firebase;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
+import com.t_knight.and.capstone.model.FireContent;
 import com.t_knight.and.capstone.model.Topic;
-import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.quiz.Quiz;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 public class FirebaseConnection {
 
     private static final String TAG = "TAGG";
     private DatabaseReference dbRef;
 
-    private final MutableLiveData<List<TopicTitle>> topicList;
+    private final MutableLiveData<FireContent> topicList;
     //Firebase
     private static FirebaseConnection instance;
     // Local
@@ -71,7 +65,7 @@ public class FirebaseConnection {
         return topic;
     }
 
-    public LiveData<List<TopicTitle>> getAllTopicsDescription() {
+    public MutableLiveData<FireContent> getAllTopicsDescription() {
         if (topicList.getValue() != null) return topicList;
 
         Query query = dbRef.child("content");
@@ -80,6 +74,7 @@ public class FirebaseConnection {
         return topicList;
     }
 
+/*
     public void syncTopicDescriptionsForWidget() {
         Query query = dbRef.child("content");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -95,6 +90,7 @@ public class FirebaseConnection {
             }
         });
     }
+*/
 
     public LiveData<Quiz> getQuizById(int id) {
         Query query = dbRef.child("quizes").child(String.valueOf(id));
@@ -108,10 +104,19 @@ public class FirebaseConnection {
     // Local
     // ================================
 
-    public void fillDatabase(List<TopicTitle> topicList) {
+    public void fillDatabase(List<TopicDescription> topicList) {
 //        List<TopicEntity> entities = new ArrayList<>(topicList.size());
 //        for (TopicTitle topic : topicList)
 //            entities.add(new TopicEntity(topic));
         local.fillTopicList(topicList);
     }
+
+    public LiveData<List<TopicEntity>> getAllTopics() {
+        return local.getAll();
+    }
+
+    public void pinTopic(TopicEntity topicEntity) {
+        local.pinTopic(topicEntity);
+    }
+
 }

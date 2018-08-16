@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.Pair;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -46,7 +45,7 @@ public class QuizTextView extends AppCompatTextView {
     public void setQuizSpots(List<QuizSpot> data) {
         if (data != null && data.size() > 0) {
             quizSpots = data;
-            requestLayout();
+//            if (isInLayout()) requestLayout();
         } else {
             quizSpots = null;
             quizSpotRects = null;

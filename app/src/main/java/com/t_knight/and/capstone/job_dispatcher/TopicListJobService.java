@@ -15,6 +15,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
+import com.t_knight.and.capstone.model.FireContent;
+import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.TopicTitle;
 
 import java.util.ArrayList;
@@ -39,10 +41,11 @@ public class TopicListJobService extends JobService {
                 Query query = dbRef.child("content");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        List<TopicTitle> data = new ArrayList<>();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                            data.add(snapshot.getValue(TopicTitle.class));
-                        fillDatabase(data);
+//                        List<TopicTitle> data = new ArrayList<>();
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren())
+//                            data.add(snapshot.getValue(TopicTitle.class));
+                        FireContent data = dataSnapshot.getValue(FireContent.class);
+                        fillDatabase(data.getTopicDescriptions());
                     }
 
                     @Override public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -52,7 +55,7 @@ public class TopicListJobService extends JobService {
                 return null;
             }
 
-            private void fillDatabase(List<TopicTitle> data) {
+            private void fillDatabase(List<TopicDescription> data) {
                 Log.i("tagg", "fillDatabase");
                 TopicListRepo local = new TopicListRepo(getApplicationContext());
                 local.fillTopicList(data);

@@ -58,7 +58,7 @@ public class TopicListWidgetService extends IntentService {
 
     private void doActionUpdateWidget() {
         TopicListRepo repo = new TopicListRepo(getApplicationContext());
-        List<TopicEntity> data = repo.getAll();
+        List<TopicEntity> data = repo.getAllForWidget();
 
         StringBuilder sb = new StringBuilder();
         for (TopicEntity entity : data) {

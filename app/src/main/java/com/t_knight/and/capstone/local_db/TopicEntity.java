@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.TopicDescription;
 
 @Entity(tableName = "topics")
 public class TopicEntity {
@@ -27,7 +27,9 @@ public class TopicEntity {
 
     public int wordCount;
 
-    public TopicEntity(int topicId, String titleFrom, String titleTo, String description, String coverUrl, String from, String to, int wordCount) {
+    public boolean pinned;
+
+    public TopicEntity(int topicId, String titleFrom, String titleTo, String description, String coverUrl, String from, String to, int wordCount, boolean pinned) {
         this.topicId = topicId;
         this.titleFrom = titleFrom;
         this.titleTo = titleTo;
@@ -36,17 +38,14 @@ public class TopicEntity {
         this.from = from;
         this.to = to;
         this.wordCount = wordCount;
+        this.pinned = pinned;
     }
 
-    public TopicEntity(TopicTitle topicTitle) {
-        this.topicId = topicTitle.getId();
-        this.titleFrom = topicTitle.getTitleFrom();
-        this.titleTo = topicTitle.getTitleTo();
-        this.description = topicTitle.getDescription();
-        this.coverUrl = topicTitle.getCoverUrl();
-        this.from = topicTitle.getFrom();
-        this.to = topicTitle.getTo();
-        this.wordCount = topicTitle.getWordCount();
+    public TopicEntity(TopicDescription topic) {
+        this(topic.getId(), topic.getTitleFrom(), topic.getTitleTo(),
+                topic.getDescription(), topic.getCoverUrl(), topic.getFrom(),
+                topic.getTo(), topic.getWordCount(), false
+        );
     }
 
 }

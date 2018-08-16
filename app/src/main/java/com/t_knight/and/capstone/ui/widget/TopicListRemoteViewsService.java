@@ -38,7 +38,7 @@ class TopicListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     @Override public void onDataSetChanged() {
         Timber.i("onDataSetChanged");
         TopicListRepo repo = new TopicListRepo(context);
-        data = repo.getAll();
+        data = repo.getAllForWidget();
     }
 
     @Override public void onDestroy() {

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.TopicTitle;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class TopicDetailsFragment extends Fragment {
     private int difficultyLevel;
     private MainViewModel viewModel;
 
-    public SingleLiveEvent<TopicTitle> btnReadClick = new SingleLiveEvent<>();
+    public SingleLiveEvent<TopicDescription> btnReadClick = new SingleLiveEvent<>();
     public SingleLiveEvent<Pair<Integer, Integer>> btnQuizClick = new SingleLiveEvent<>();
 
     @Override
@@ -75,29 +76,39 @@ public class TopicDetailsFragment extends Fragment {
     }
 
     private void registerObservers() {
-        viewModel.getActiveTopicDetails().observe(this, new Observer<TopicTitle>() {
-            @Override public void onChanged(@Nullable TopicTitle topicTitle) {
-                if (topicTitle != null) {
-                    toolbar.setTitle(topicTitle.getTitleTo());
-                    tvDescription.setText(topicTitle.getDescription());
-                    tvDescription2.setText(topicTitle.getTitleFrom());
-                    btnReadClick(topicTitle);
+        viewModel.getActiveTopicDetails().observe(this, new Observer<TopicDescription>() {
+            @Override public void onChanged(@Nullable TopicDescription topicDescription) {
+                if (topicDescription != null) {
+                    toolbar.setTitle(topicDescription.getTitleTo());
+                    tvDescription.setText(topicDescription.getDescription());
+                    tvDescription2.setText(topicDescription.getTitleFrom());
+                    btnReadClick(topicDescription);
                 }
             }
         });
+//        viewModel.getActiveTopicDetails().observe(this, new Observer<TopicTitle>() {
+//            @Override public void onChanged(@Nullable TopicTitle topicTitle) {
+//                if (topicTitle != null) {
+//                    toolbar.setTitle(topicTitle.getTitleTo());
+//                    tvDescription.setText(topicTitle.getDescription());
+//                    tvDescription2.setText(topicTitle.getTitleFrom());
+//                    btnReadClick(topicTitle);
+//                }
+//            }
+//        });
     }
 
-    private void btnReadClick(final TopicTitle topicTitle) {
+    private void btnReadClick(final TopicDescription topic) {
         btnRead.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                btnReadClick.setValue(topicTitle);
+                btnReadClick.setValue(topic);
             }
         });
 
         btnQuiz.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-//                btnQuizClick.setValue(topicTitle.getId());
-                btnQuizClick.setValue(new Pair<>(topicTitle.getId(), Math.round(ratingBar.getRating())));
+//                btnQuizClick.setValue(topic.getId());
+                btnQuizClick.setValue(new Pair<>(topic.getId(), Math.round(ratingBar.getRating())));
             }
         });
     }

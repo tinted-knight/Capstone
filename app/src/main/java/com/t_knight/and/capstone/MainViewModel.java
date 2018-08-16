@@ -7,8 +7,10 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
+import com.t_knight.and.capstone.local_db.TopicEntity;
+import com.t_knight.and.capstone.model.FireContent;
 import com.t_knight.and.capstone.model.Topic;
-import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.TopicDescription;
 
 import java.util.List;
 
@@ -16,10 +18,11 @@ public class MainViewModel extends AndroidViewModel {
 
     private static final String TAG = "TAGG";
 
-    private LiveData<List<TopicTitle>> topicList;
+    private MutableLiveData<FireContent> topicList;
+    private LiveData<List<TopicEntity>> topics;
 
     private int activeTopicId = 0;
-    private MutableLiveData<TopicTitle> activeTopic;
+    private MutableLiveData<TopicDescription> activeTopic;
 
     private FirebaseConnection repo;
 
@@ -32,9 +35,9 @@ public class MainViewModel extends AndroidViewModel {
         activeTopicId = id;
     }
 
-    public LiveData<TopicTitle> getActiveTopicDetails() {
+    public LiveData<TopicDescription> getActiveTopicDetails() {
         if (activeTopic == null) activeTopic = new MutableLiveData<>();
-        activeTopic.setValue(topicList.getValue().get(activeTopicId));
+        activeTopic.setValue(topicList.getValue().getTopicDescriptions().get(activeTopicId));
         return activeTopic;
     }
 
@@ -42,16 +45,24 @@ public class MainViewModel extends AndroidViewModel {
         return repo.getAllTopicsContent();
     }
 
-    public LiveData<List<TopicTitle>> getTopicTitles() {
+    public MutableLiveData<FireContent> loadFromNetwork() {
         // TODO if (topicList != null) return topicList
         topicList = repo.getAllTopicsDescription();
         return topicList;
     }
 
+    public LiveData<List<TopicEntity>> getAllTopics() {
+        topics = repo.getAllTopics();
+        return topics;
+    }
+
     public void fillLocalDatabase() {
-        if (topicList != null && topicList.getValue() != null && topicList.getValue().size() > 0) {
-            repo.fillDatabase(topicList.getValue());
+        if (topicList != null && topicList.getValue() != null) {
+            repo.fillDatabase(topicList.getValue().getTopicDescriptions());
         }
     }
 
+    public void pinTopicToWidget(TopicEntity topic) {
+        repo.pinTopic(topic);
+    }
 }

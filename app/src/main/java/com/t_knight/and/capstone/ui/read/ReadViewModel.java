@@ -12,7 +12,7 @@ import android.util.Pair;
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
 import com.t_knight.and.capstone.model.SingleCard;
 import com.t_knight.and.capstone.model.Topic;
-import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.helpers.NavigationButtonsLiveData;
 
 import java.util.List;
@@ -22,19 +22,19 @@ public class ReadViewModel extends AndroidViewModel {
     private static final String TAG = "TAGG";
 
     //    private final FirebaseConnection repo;
-    private final TopicTitle topicTitle;
+    private final TopicDescription topicDescription;
     private LiveData<Topic> topicContent;
     private int currentCard;
     private MutableLiveData<SingleCard> singleCard;
     private NavigationButtonsLiveData navBtnState;
 
-    private ReadViewModel(@NonNull Application application, FirebaseConnection repository, TopicTitle topicTitle) {
+    private ReadViewModel(@NonNull Application application, FirebaseConnection repository, TopicDescription topicDescription) {
         super(application);
 //        repo = repository;
-        this.topicTitle = topicTitle;
+        this.topicDescription = topicDescription;
         navBtnState = new NavigationButtonsLiveData();
         singleCard = new MutableLiveData<>();
-        topicContent = repository.getTopicById(topicTitle.getId());
+        topicContent = repository.getTopicById(topicDescription.getId());
     }
 
     public void navigateNextCard() {
@@ -88,12 +88,12 @@ public class ReadViewModel extends AndroidViewModel {
     public static class ReadVMFactory extends ViewModelProvider.NewInstanceFactory {
 
         private final Application application;
-        private final TopicTitle topicTitle;
+        private final TopicDescription topicTitle;
         private final FirebaseConnection repository;
 
-        ReadVMFactory(Application application, TopicTitle topicTitle) {
+        ReadVMFactory(Application application, TopicDescription topicDescription) {
             this.application = application;
-            this.topicTitle = topicTitle;
+            this.topicTitle = topicDescription;
             repository = FirebaseConnection.getInstance(application);
         }
 
