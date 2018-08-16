@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.firebase.storage.GlideApp;
 import com.t_knight.and.capstone.local_db.TopicEntity;
-import com.t_knight.and.capstone.model.TopicTitle;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
 
     private List<TopicEntity> data;
     private final TopicListItemClick listener;
+
+    private StorageReference reference = FirebaseStorage.getInstance().getReference();
 
     TopicListAdapter(TopicListItemClick listener) {
         this.listener = listener;
@@ -65,6 +70,8 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
         @BindView(R.id.tvTitle) TextView tvTitle;
         @BindView(R.id.tv_description) TextView tvDescription;
         @BindView(R.id.ib_pin) ImageButton ibPin;
+        @BindView(R.id.iv_cover) ImageView ivCover;
+
         @BindDrawable(R.drawable.ic_bookmark_border_24dp) Drawable drawableNotPinned;
         @BindDrawable(R.drawable.ic_bookmark_24dp) Drawable drawablePinned;
 
@@ -87,12 +94,16 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
 
         void bind(TopicEntity topic) {
             tvTitle.setText(topic.titleFrom);
-            tvDescription.setText(topic.titleFrom);
+            tvDescription.setText(topic.titleTo);
             if (topic.pinned) {
                 ibPin.setImageDrawable(drawablePinned);
             } else {
                 ibPin.setImageDrawable(drawableNotPinned);
             }
+            String stringRef = "covers/" + topic.coverUrl;
+            GlideApp.with(ivCover)
+                    .load(reference.child(stringRef))
+                    .into(ivCover);
         }
     }
 }
