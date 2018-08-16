@@ -7,9 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
-import com.t_knight.and.capstone.local_db.TopicListRepo;
-import com.t_knight.and.capstone.model.TopicList;
-import com.t_knight.and.capstone.model.TopicContentList;
+import com.t_knight.and.capstone.model.Topic;
 import com.t_knight.and.capstone.model.TopicTitle;
 
 import java.util.List;
@@ -18,7 +16,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private static final String TAG = "TAGG";
 
-    private LiveData<TopicList> topicList;
+    private LiveData<List<TopicTitle>> topicList;
 
     private int activeTopicId = 0;
     private MutableLiveData<TopicTitle> activeTopic;
@@ -40,11 +38,11 @@ public class MainViewModel extends AndroidViewModel {
         return activeTopic;
     }
 
-    public LiveData<TopicContentList> getAllTopicsContent() {
+    public LiveData<List<Topic>> getAllTopicsContent() {
         return repo.getAllTopicsContent();
     }
 
-    public LiveData<TopicList> getTopicTitles() {
+    public LiveData<List<TopicTitle>> getTopicTitles() {
         // TODO if (topicList != null) return topicList
         topicList = repo.getAllTopicsDescription();
         return topicList;

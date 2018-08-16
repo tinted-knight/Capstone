@@ -8,18 +8,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.t_knight.and.capstone.model.Topic;
-import com.t_knight.and.capstone.model.TopicContentList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class TopicValueEventListener implements ValueEventListener {
 
-    private final MutableLiveData<TopicContentList> data;
+    private final MutableLiveData<List<Topic>> data;
 
-    TopicValueEventListener(MutableLiveData<TopicContentList> data) {
+    TopicValueEventListener(MutableLiveData<List<Topic>> data) {
         this.data = data;
     }
 
     @Override public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        TopicContentList topicList = new TopicContentList();
+        List<Topic> topicList = new ArrayList<>();
         for (DataSnapshot snapshot : dataSnapshot.getChildren())
             topicList.add(snapshot.getValue(Topic.class));
         if (topicList.size() > 0) data.setValue(topicList);

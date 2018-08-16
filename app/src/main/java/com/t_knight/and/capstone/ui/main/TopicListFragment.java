@@ -14,8 +14,10 @@ import android.view.ViewGroup;
 
 import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
-import com.t_knight.and.capstone.model.TopicList;
+import com.t_knight.and.capstone.model.TopicTitle;
 import com.t_knight.and.capstone.model.helpers.FirstStartPreference;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,8 +83,8 @@ public class TopicListFragment extends Fragment {
     }
 
     private void registerObservers() {
-        viewModel.getTopicTitles().observe(this, new Observer<TopicList>() {
-            @Override public void onChanged(@Nullable TopicList topicTitles) {
+        viewModel.getTopicTitles().observe(this, new Observer<List<TopicTitle>>() {
+            @Override public void onChanged(@Nullable List<TopicTitle> topicTitles) {
                 adapter.setData(topicTitles);
                 FirstStartPreference firstStart = new FirstStartPreference(getActivity());
                 if (firstStart.isTrue()) {

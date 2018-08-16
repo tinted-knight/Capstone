@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.R;
-import com.t_knight.and.capstone.model.TopicList;
 import com.t_knight.and.capstone.model.TopicTitle;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.TopicListViewHolder> {
 
-    private TopicList data;
+    private List<TopicTitle> data;
     private final TopicListItemClick listener;
 
     TopicListAdapter(TopicListItemClick listener) {
@@ -31,7 +32,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
         return new TopicListViewHolder(itemView);
     }
 
-    public void setData(TopicList newData) {
+    public void setData(List<TopicTitle> newData) {
         if (newData == null) return;
         data = newData;
         notifyDataSetChanged();

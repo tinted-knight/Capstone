@@ -3,7 +3,6 @@ package com.t_knight.and.capstone.local_db;
 import android.content.Context;
 
 import com.t_knight.and.capstone.AppExecutors;
-import com.t_knight.and.capstone.model.TopicList;
 import com.t_knight.and.capstone.model.TopicTitle;
 
 import java.util.ArrayList;
@@ -32,16 +31,17 @@ public class TopicListRepo {
 //        return instance;
 //    }
 
-    public void fillTopicList(final TopicList topicList) {
+    public void fillTopicList(final List<TopicTitle> topicList) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override public void run() {
                 List<TopicEntity> entities;
                 entities = dao.getAll();
-                if (entities != null && entities.size() > 0)
+                if (entities != null && entities.size() > 0) {
                     dao.clear(entities.toArray(new TopicEntity[]{}));
+                    Timber.i("dao clear");
+                }
 
                 entities = new ArrayList<>(topicList.size());
-                Timber.tag("fillTopicList");
                 for (TopicTitle topic : topicList) {
                     entities.add(new TopicEntity(topic));
                     Timber.i(topic.getTitleFrom());

@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.read.ReadActivity">
         </activity>
+
         <activity android:name=".ui.quiz.QuizActivity">
         </activity>
 
@@ -42,6 +45,15 @@
         <service
             android:name=".ui.widget.TopicListRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!--JobService for Firebase JobDispatcher-->
+        <service
+            android:name=".job_dispatcher.TopicListJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
 
     </application>
 
