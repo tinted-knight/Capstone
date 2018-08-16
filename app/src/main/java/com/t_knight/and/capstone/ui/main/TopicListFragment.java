@@ -92,6 +92,7 @@ public class TopicListFragment extends Fragment {
                     if (prefs.isFirstStart() || prefs.isNewerVersion(content.getVersion())) {
                         viewModel.fillLocalDatabase();
                         prefs.setFirstStartFalse();
+                        prefs.setVersion(content.getVersion());
                     }
                 }
             }

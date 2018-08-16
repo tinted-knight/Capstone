@@ -22,5 +22,7 @@ public interface TopicsDao {
 
     @Query("update topics set pinned = 0 where pinned = 1") void unpinAll();
 
+    @Query("select * from topics where pinned = 1") TopicEntity getPinned();
+
     @Update() void updateTopic(TopicEntity topicEntity);
 }

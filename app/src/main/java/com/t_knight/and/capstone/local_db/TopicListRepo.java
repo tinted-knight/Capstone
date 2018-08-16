@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.t_knight.and.capstone.AppExecutors;
 import com.t_knight.and.capstone.model.TopicDescription;
+import com.t_knight.and.capstone.ui.widget_new.TopicWidgetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,14 +61,6 @@ public class TopicListRepo {
 //        });
 //    }
 
-    public List<TopicEntity> getAllForWidget() {
-        return dao.getAllForWidget();
-    }
-
-    public LiveData<List<TopicEntity>> getAll() {
-        return dao.getAll();
-    }
-
     public void pinTopic(final TopicEntity topicEntity) {
         topicEntity.pinned = true;
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -76,5 +69,17 @@ public class TopicListRepo {
                 dao.updateTopic(topicEntity);
             }
         });
+    }
+
+    public List<TopicEntity> getAllForWidget() {
+        return dao.getAllForWidget();
+    }
+
+    public LiveData<List<TopicEntity>> getAll() {
+        return dao.getAll();
+    }
+
+    public TopicEntity getPinned() {
+        return dao.getPinned();
     }
 }
