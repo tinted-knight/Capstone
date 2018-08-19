@@ -4,13 +4,17 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.transition.Fade;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.jobdispatcher.Constraint;
@@ -23,6 +27,7 @@ import com.t_knight.and.capstone.job_dispatcher.TopicListJobService;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.helpers.DetailTransition;
 import com.t_knight.and.capstone.model.helpers.QuizPair;
 import com.t_knight.and.capstone.ui.main.TopicDetailsFragment;
 import com.t_knight.and.capstone.ui.main.TopicListAdapter;
@@ -86,14 +91,31 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    @Override public void onTopicListItemClick(TopicEntity topic) {
+    @Override public void onTopicListItemClick(TopicEntity topic, View view) {
         viewModel.setActiveTopic(topic.topicId);
-        TopicDetailsFragment fragment = new TopicDetailsFragment();
-        getSupportFragmentManager().beginTransaction()
-                .addToBackStack(null)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.flMain, fragment, TopicDetailsFragment.class.getSimpleName())
-                .commit();
+        TopicDetailsFragment detailsFragment = new TopicDetailsFragment();
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            Fragment currentFragment = getSupportFragmentManager()
+                    .findFragmentByTag(TopicListFragment.class.getSimpleName());
+            detailsFragment.setSharedElementEnterTransition(new DetailTransition());
+            detailsFragment.setEnterTransition(new Fade());
+            currentFragment.setExitTransition(new Fade());
+            detailsFragment.setSharedElementReturnTransition(new DetailTransition());
+
+            getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(null)
+                    .addSharedElement(view, "iv_trans_name")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .replace(R.id.flMain, detailsFragment, TopicDetailsFragment.class.getSimpleName())
+                    .commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .addToBackStack(null)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .replace(R.id.flMain, detailsFragment, TopicDetailsFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 
     @Override public void onTopicListPinClick(TopicEntity topic) {

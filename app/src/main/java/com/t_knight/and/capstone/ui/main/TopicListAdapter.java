@@ -1,6 +1,7 @@
 package com.t_knight.and.capstone.ui.main;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,7 +61,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
     }
 
     public interface TopicListItemClick {
-        void onTopicListItemClick(TopicEntity topic);
+        void onTopicListItemClick(TopicEntity topic, View view);
 
         void onTopicListPinClick(TopicEntity topic);
     }
@@ -81,7 +82,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     if (listener != null)
-                        listener.onTopicListItemClick(data.get(getAdapterPosition()));
+                        listener.onTopicListItemClick(data.get(getAdapterPosition()), ivCover);
                 }
             });
             ibPin.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +105,9 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
             GlideApp.with(ivCover)
                     .load(reference.child(stringRef))
                     .into(ivCover);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ivCover.setTransitionName("iv_trans_name" + String.valueOf(topic.topicId));
+            }
         }
     }
 }

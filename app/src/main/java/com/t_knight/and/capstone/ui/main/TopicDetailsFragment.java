@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.firebase.storage.GlideApp;
 import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.helpers.QuizPair;
 
@@ -34,6 +36,7 @@ public class TopicDetailsFragment extends Fragment {
     @BindView(R.id.btn_quiz) Button btnQuiz;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.ratingBar) RatingBar ratingBar;
+    @BindView(R.id.app_bar_image) ImageView ivCover;
 
     private MainViewModel viewModel;
 
@@ -69,6 +72,10 @@ public class TopicDetailsFragment extends Fragment {
                     tvDescription.setText(topicDescription.getDescription());
                     tvDescription2.setText(topicDescription.getTitleFrom());
                     setupBottomButtons(topicDescription);
+                    String stringRef = "covers/" + topicDescription.getCoverUrl();
+                    GlideApp.with(ivCover)
+                            .load(viewModel.getStorageRef(stringRef))
+                            .into(ivCover);
                 }
             }
         });

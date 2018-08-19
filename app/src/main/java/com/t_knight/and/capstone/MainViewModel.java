@@ -6,6 +6,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.FireContent;
@@ -26,12 +28,15 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<TopicDescription> activeTopic;
 
     private FirebaseConnection repo;
+    private final StorageReference storageRef;
+
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         repo = FirebaseConnection.getInstance(application);
         topicList = repo.getAllTopicsDescription();
         topics = repo.getAllTopics();
+        storageRef = FirebaseStorage.getInstance().getReference();
     }
 
     public void setActiveTopic(int id) {
@@ -71,5 +76,9 @@ public class MainViewModel extends AndroidViewModel {
     public void pinTopicToWidget(TopicEntity topic) {
         repo.pinTopic(topic);
         TopicWidgetService.startActionUpdate(getApplication());
+    }
+
+    public StorageReference getStorageRef(String s) {
+        return storageRef.child(s);
     }
 }
