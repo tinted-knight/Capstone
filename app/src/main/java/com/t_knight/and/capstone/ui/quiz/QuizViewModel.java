@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
+import com.t_knight.and.capstone.model.helpers.QuizHint;
 import com.t_knight.and.capstone.model.quiz.Quiz;
 import com.t_knight.and.capstone.model.quiz.QuizCard;
 import com.t_knight.and.capstone.model.quiz.QuizSpot;
@@ -25,7 +26,7 @@ public class QuizViewModel extends AndroidViewModel {
     private final int difficulty;
 
     //    private List<String> answers;
-    private MutableLiveData<List<Pair<Boolean, String>>> answersCheckResult;
+    private MutableLiveData<List<QuizHint>> answersCheckResult;
 
     private QuizViewModel(@NonNull Application application, FirebaseConnection repository, int topicId, int difficulty) {
         super(application);
@@ -65,7 +66,7 @@ public class QuizViewModel extends AndroidViewModel {
         if (answerList != null && answerList.size() > 0) {
             QuizCard quizCard = currentQuizCard.getValue();
             int i = 0;
-            List<Pair<Boolean, String>> checkResult2 = new ArrayList<>(answerList.size());
+            List<QuizHint> checkResult2 = new ArrayList<>(answerList.size());
             List<String> correctAnswers = new ArrayList<>();
             for (String answer : answerList) {
                 QuizSpot spot = quizCard.getSpots().get(i);
@@ -79,15 +80,15 @@ public class QuizViewModel extends AndroidViewModel {
 
                 if (answer.equalsIgnoreCase(correctAnswers.get(0))) {
                     // absolutely right
-                    checkResult2.add(new Pair<>(true, ""));
+                    checkResult2.add(new QuizHint(true, ""));
                 }
                 else {
                     if (correctAnswers.contains(answer.toLowerCase())) {
                         // right but not absolutely
-                        checkResult2.add(new Pair<>(true, spot.getAnswer()));
+                        checkResult2.add(new QuizHint(true, spot.getAnswer()));
                     } else {
                         // wrong
-                        checkResult2.add(new Pair<>(false, spot.getAnswer()));
+                        checkResult2.add(new QuizHint(false, spot.getAnswer()));
                     }
                 }
                 i++;
@@ -121,7 +122,7 @@ public class QuizViewModel extends AndroidViewModel {
         return currentQuizCard;
     }
 
-    public LiveData<List<Pair<Boolean, String>>> getAnswersCheckResult() {
+    public LiveData<List<QuizHint>> getAnswersCheckResult() {
         return answersCheckResult;
     }
 

@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.model.helpers.QuizHint;
 import com.t_knight.and.capstone.model.quiz.QuizCard;
 import com.t_knight.and.capstone.model.quiz.QuizSpot;
 import com.t_knight.and.capstone.ui.custom_views.QuizEditTextLayoutChangeListener;
@@ -59,6 +60,18 @@ public class QuizFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_quiz, container, false);
         ButterKnife.bind(this, rootView);
 
+        setClickListeners();
+
+        return rootView;
+    }
+
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(getActivity()).get(QuizViewModel.class);
+        registerObservers();
+    }
+
+    private void setClickListeners() {
         btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 List<String> answers = new ArrayList<>(etQuizAnswers.size());
@@ -78,13 +91,6 @@ public class QuizFragment extends Fragment {
                 return true;
             }
         });
-        return rootView;
-    }
-
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(getActivity()).get(QuizViewModel.class);
-        registerObservers();
     }
 
     private void registerObservers() {
@@ -101,18 +107,18 @@ public class QuizFragment extends Fragment {
             }
         });
 
-        viewModel.getAnswersCheckResult().observe(this, new Observer<List<Pair<Boolean, String>>>() {
-            @Override public void onChanged(@Nullable List<Pair<Boolean, String>> hints) {
+        viewModel.getAnswersCheckResult().observe(this, new Observer<List<QuizHint>>() {
+            @Override public void onChanged(@Nullable List<QuizHint> hints) {
                 if (hints != null) {
                     boolean allCorrect = true;
                     int i = 0;
-                    for (Pair<Boolean, String> hint : hints) {
-                        if (!hint.first) {
+                    for (QuizHint quizHint : hints) {
+                        if (!quizHint.answerCorrect()) {
                             allCorrect = false;
-                            highlightError(etQuizAnswers.get(i), hint.second);
+                            highlightError(etQuizAnswers.get(i), quizHint.getHint());
                         } else {
-                            if (!hint.second.isEmpty()) {
-                                highlightMisspell(etQuizAnswers.get(i), hint.second);
+                            if (!quizHint.isHintEmpty()) {
+                                highlightMisspell(etQuizAnswers.get(i), quizHint.getHint());
                             } else {
                                 highlightCorrect(etQuizAnswers.get(i));
                             }
