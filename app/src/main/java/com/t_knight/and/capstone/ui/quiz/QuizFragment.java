@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -63,7 +64,7 @@ public class QuizFragment extends Fragment {
                 List<String> answers = new ArrayList<>(etQuizAnswers.size());
                 for (EditText answer : etQuizAnswers)
                     answers.add(answer.getText().toString().trim());
-                viewModel.checkAnswers(answers);
+                viewModel.checkAnswers2(answers);
             }
         });
         tvHint.setOnClickListener(new View.OnClickListener() {
@@ -100,17 +101,21 @@ public class QuizFragment extends Fragment {
             }
         });
 
-        viewModel.getAnswersCheckResult().observe(this, new Observer<List<String>>() {
-            @Override public void onChanged(@Nullable List<String> hints) {
+        viewModel.getAnswersCheckResult().observe(this, new Observer<List<Pair<Boolean, String>>>() {
+            @Override public void onChanged(@Nullable List<Pair<Boolean, String>> hints) {
                 if (hints != null) {
                     boolean allCorrect = true;
                     int i = 0;
-                    for (String hint : hints) {
-                        if (hint != null) {
+                    for (Pair<Boolean, String> hint : hints) {
+                        if (!hint.first) {
                             allCorrect = false;
-                            highlightError(etQuizAnswers.get(i), hint);
+                            highlightError(etQuizAnswers.get(i), hint.second);
                         } else {
-                            highlightCorrect(etQuizAnswers.get(i));
+                            if (!hint.second.isEmpty()) {
+                                highlightMisspell(etQuizAnswers.get(i), hint.second);
+                            } else {
+                                highlightCorrect(etQuizAnswers.get(i));
+                            }
                         }
                         i++;
                     }
@@ -125,9 +130,16 @@ public class QuizFragment extends Fragment {
                 editText.setHintTextColor(Color.RED);
             }
 
+            private void highlightMisspell(EditText editText, String hint) {
+                editText.setText("");
+                editText.setHint(hint);
+                editText.setHintTextColor(Color.BLUE);
+            }
+
             private void highlightCorrect(EditText editText) {
                 editText.setBackgroundColor(Color.GREEN);
             }
+
         });
     }
 

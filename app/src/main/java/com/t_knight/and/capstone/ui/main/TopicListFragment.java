@@ -89,6 +89,8 @@ public class TopicListFragment extends Fragment {
             @Override public void onChanged(@Nullable FireContent content) {
                 if (content != null){
                     AppPreferences prefs = new AppPreferences(getActivity());
+                    boolean firstStart = prefs.isFirstStart();
+                    int v = content.getVersion();
                     if (prefs.isFirstStart() || prefs.isNewerVersion(content.getVersion())) {
                         viewModel.fillLocalDatabase();
                         prefs.setFirstStartFalse();
