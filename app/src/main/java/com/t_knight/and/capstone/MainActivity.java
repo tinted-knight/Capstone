@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.jobdispatcher.Constraint;
@@ -22,6 +23,7 @@ import com.t_knight.and.capstone.job_dispatcher.TopicListJobService;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.TopicTitle;
+import com.t_knight.and.capstone.model.helpers.QuizPair;
 import com.t_knight.and.capstone.ui.main.TopicDetailsFragment;
 import com.t_knight.and.capstone.ui.main.TopicListAdapter;
 import com.t_knight.and.capstone.ui.main.TopicListFragment;
@@ -92,27 +94,11 @@ public class MainActivity extends AppCompatActivity
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.flMain, fragment, TopicDetailsFragment.class.getSimpleName())
                 .commit();
-
-        setupBtnClickListeners(fragment);
     }
 
     @Override public void onTopicListPinClick(TopicEntity topic) {
         Toast.makeText(this, "pin topic id = " + String.valueOf(topic.topicId), Toast.LENGTH_SHORT).show();
         viewModel.pinTopicToWidget(topic);
-    }
-
-    private void setupBtnClickListeners(TopicDetailsFragment fragment) {
-        fragment.btnReadClick.observe(this, new Observer<TopicDescription>() {
-            @Override public void onChanged(@Nullable TopicDescription value) {
-                if (value != null) startReadActivity(value);
-            }
-        });
-
-        fragment.btnQuizClick.observe(this, new Observer<Pair<Integer, Integer>>() {
-            @Override public void onChanged(@Nullable Pair<Integer, Integer> value) {
-                if (value != null) startQuizActivity(value.first, value.second);
-            }
-        });
     }
 
     private void startReadActivity(TopicDescription topicTitle) {
@@ -128,7 +114,21 @@ public class MainActivity extends AppCompatActivity
         startActivity(quizIntent);
     }
 
-    @Override public void onTopicDetailsFragmentInteraction(Uri uri) {
-        Toast.makeText(this, "interaction", Toast.LENGTH_SHORT).show();
+    @Override public void onBtnReadClick(TopicDescription topicDescription) {
+        if (topicDescription != null)
+            startReadActivity(topicDescription);
+    }
+
+    @Override public void onBtnQuizClick(QuizPair quizPair) {
+        if (quizPair != null)
+            startQuizActivity(quizPair.getTopicId(), quizPair.getDifficulty());
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

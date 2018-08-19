@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Pair;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.model.TopicDescription;
-import com.t_knight.and.capstone.model.TopicTitle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,7 @@ public class ReadActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_next) Button btnNext;
     @BindView(R.id.btn_prev) Button btnPrev;
+    @BindView(R.id.toolbar2) Toolbar toolbar;
 
     private ReadViewModel viewModel;
 
@@ -31,6 +34,8 @@ public class ReadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             Intent intent = getIntent();
@@ -43,6 +48,14 @@ public class ReadActivity extends AppCompatActivity {
                 setupNavigationButtons();
             }
         }
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupNavigationButtons() {

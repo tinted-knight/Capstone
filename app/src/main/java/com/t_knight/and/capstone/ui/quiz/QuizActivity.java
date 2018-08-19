@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.t_knight.and.capstone.R;
@@ -23,6 +25,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final int DIFFICULTY_LEVEL_DEFAULT = 1;
 
     @BindView(R.id.tv_translation) TextView tvTranslation;
+    @BindView(R.id.toolbar2) Toolbar toolbar;
 
     private QuizViewModel viewModel;
 
@@ -31,6 +34,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -70,4 +75,11 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
