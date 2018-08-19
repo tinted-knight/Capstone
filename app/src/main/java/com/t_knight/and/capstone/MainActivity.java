@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         implements TopicListAdapter.TopicListItemClick, TopicDetailsFragment.OnTopicDetailsInteractionListener {
 
     public static final String TAG = "TAGG";
-        private static final int periodicity = (int) TimeUnit.HOURS.toSeconds(24); // 3 hours
+    private static final int periodicity = (int) TimeUnit.HOURS.toSeconds(24); // 3 hours
     private static final int interval = (int) TimeUnit.MINUTES.toSeconds(15);
 //    private static final int periodicity = (int) TimeUnit.SECONDS.toSeconds(15); // 3 hours
 //    private static final int interval = (int) TimeUnit.SECONDS.toSeconds(15);
@@ -51,8 +52,10 @@ public class MainActivity extends AppCompatActivity
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        showTopicList();
-        scheduleTopicListSync();
+        if (savedInstanceState == null) {
+            showTopicList();
+            scheduleTopicListSync();
+        }
     }
 
     private void scheduleTopicListSync() {

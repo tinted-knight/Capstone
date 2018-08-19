@@ -55,9 +55,9 @@ public class TopicDetailsFragment extends Fragment {
     public SingleLiveEvent<TopicDescription> btnReadClick = new SingleLiveEvent<>();
     public SingleLiveEvent<Pair<Integer, Integer>> btnQuizClick = new SingleLiveEvent<>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("qwe", viewModel.getActiveTopicId());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -72,6 +72,8 @@ public class TopicDetailsFragment extends Fragment {
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        if (savedInstanceState != null)
+            viewModel.setActiveTopic(savedInstanceState.getInt("qwe"));
         registerObservers();
     }
 

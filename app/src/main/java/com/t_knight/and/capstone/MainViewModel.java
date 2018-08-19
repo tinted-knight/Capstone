@@ -30,10 +30,16 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(@NonNull Application application) {
         super(application);
         repo = FirebaseConnection.getInstance(application);
+        topicList = repo.getAllTopicsDescription();
+        topics = repo.getAllTopics();
     }
 
     public void setActiveTopic(int id) {
         activeTopicId = id;
+    }
+
+    public int getActiveTopicId() {
+        return activeTopicId;
     }
 
     public LiveData<TopicDescription> getActiveTopicDetails() {
@@ -53,7 +59,6 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<TopicEntity>> getAllTopics() {
-        topics = repo.getAllTopics();
         return topics;
     }
 

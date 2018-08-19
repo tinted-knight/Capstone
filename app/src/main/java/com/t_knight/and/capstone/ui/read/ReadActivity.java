@@ -32,14 +32,16 @@ public class ReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            TopicDescription topic = intent.getParcelableExtra(EXTRA_TOPIC_ID);
-            ReadViewModel.ReadVMFactory factory =
-                    new ReadViewModel.ReadVMFactory(getApplication(), topic);
-            viewModel = ViewModelProviders.of(this, factory).get(ReadViewModel.class);
-            showReadFragment();
-            setupNavigationButtons();
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            if (intent != null) {
+                TopicDescription topic = intent.getParcelableExtra(EXTRA_TOPIC_ID);
+                ReadViewModel.ReadVMFactory factory =
+                        new ReadViewModel.ReadVMFactory(getApplication(), topic);
+                viewModel = ViewModelProviders.of(this, factory).get(ReadViewModel.class);
+                showReadFragment();
+                setupNavigationButtons();
+            }
         }
     }
 
