@@ -17,6 +17,9 @@ import timber.log.Timber;
  */
 public class AppWidget extends AppWidgetProvider {
 
+    public static final String SELF_ACTION_NEXT = "action_next";
+    public static final String SELF_ACTION_PREVIOUS = "action_previous";
+
     static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
                                  int[] appWidgetIds, String to, String from) {
         for (int appWidgetId : appWidgetIds)
@@ -31,44 +34,36 @@ public class AppWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.tv_to, to);
         views.setTextViewText(R.id.tv_from, from);
 
-        Intent intentTo = new Intent(context, AppWidget.class);
-        intentTo.setAction("to");
-        views.setOnClickPendingIntent(R.id.tv_to, PendingIntent.getBroadcast(context, 0, intentTo, 0));
+        views.setOnClickPendingIntent(R.id.btn_next,
+                getSelfPendignIntent(context, SELF_ACTION_NEXT));
 
-        Intent intentFrom = new Intent(context, AppWidget.class);
-        intentFrom.setAction("from");
-        views.setOnClickPendingIntent(R.id.tv_from, PendingIntent.getBroadcast(context, 0, intentFrom, 0));
+        views.setOnClickPendingIntent(R.id.btn_previous,
+                getSelfPendignIntent(context, SELF_ACTION_PREVIOUS));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+    private static PendingIntent getSelfPendignIntent(Context context, String action) {
+        Intent intentTo = new Intent(context, AppWidget.class);
+        intentTo.setAction(action);
+        return PendingIntent.getBroadcast(context, 0, intentTo, 0);
+    }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-//        for (int appWidgetId : appWidgetIds) {
-//            updateAppWidget(context, appWidgetManager, appWidgetId);
-//        }
         TopicWidgetService.startActionUpdate(context);
     }
 
     @Override public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if ("to".equals(intent.getAction())) {
+        if (SELF_ACTION_PREVIOUS.equals(intent.getAction())) {
             TopicWidgetService.getPreviousCard(context);
-        } else if ("from".equals(intent.getAction())) {
+        } else if (SELF_ACTION_NEXT.equals(intent.getAction())) {
             TopicWidgetService.getNextCard(context);
         }
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
 }
 
