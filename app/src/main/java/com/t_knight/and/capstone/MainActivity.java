@@ -1,17 +1,12 @@
 package com.t_knight.and.capstone;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +21,9 @@ import com.firebase.jobdispatcher.Trigger;
 import com.t_knight.and.capstone.job_dispatcher.TopicListJobService;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.TopicDescription;
-import com.t_knight.and.capstone.model.TopicTitle;
 import com.t_knight.and.capstone.model.helpers.DetailTransition;
 import com.t_knight.and.capstone.model.helpers.QuizPair;
+import com.t_knight.and.capstone.ui.AnalyticsUtils;
 import com.t_knight.and.capstone.ui.main.TopicDetailsFragment;
 import com.t_knight.and.capstone.ui.main.TopicListAdapter;
 import com.t_knight.and.capstone.ui.main.TopicListFragment;
@@ -121,6 +116,7 @@ public class MainActivity extends AppCompatActivity
     @Override public void onTopicListPinClick(TopicEntity topic) {
         Toast.makeText(this, "pin topic id = " + String.valueOf(topic.topicId), Toast.LENGTH_SHORT).show();
         viewModel.pinTopicToWidget(topic);
+        AnalyticsUtils.logTopicPinned(this, topic);
     }
 
     private void startReadActivity(TopicDescription topicTitle) {

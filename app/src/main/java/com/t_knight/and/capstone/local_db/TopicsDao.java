@@ -25,4 +25,14 @@ public interface TopicsDao {
     @Query("select * from topics where pinned = 1") TopicEntity getPinned();
 
     @Update() void updateTopic(TopicEntity topicEntity);
+
+    @Insert void insertReadCards(ReadCardEntity... cards);
+
+    @Query("delete from read_cards") void clearCards();
+
+    @Query("select * from read_cards where _id = :id") ReadCardEntity getCard(int id);
+
+    @Query("select * from read_cards") List<ReadCardEntity> getAllCards();
+
+    @Query("select * from read_cards order by _id limit 1") ReadCardEntity getFirstCard();
 }

@@ -13,6 +13,7 @@ import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.FireContent;
 import com.t_knight.and.capstone.model.Topic;
 import com.t_knight.and.capstone.model.TopicDescription;
+import com.t_knight.and.capstone.model.helpers.AppPreferences;
 import com.t_knight.and.capstone.ui.widget_new.TopicWidgetService;
 
 import java.util.List;
@@ -75,6 +76,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public void pinTopicToWidget(TopicEntity topic) {
         repo.pinTopic(topic);
+        repo.pinTopicForRead(topic.topicId);
         TopicWidgetService.startActionUpdate(getApplication());
     }
 

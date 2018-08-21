@@ -57,11 +57,11 @@ public class TopicListWidget extends AppWidgetProvider {
         Timber.i("updateAppWidgetList");
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_list);
         Intent intent = new Intent(context, TopicListRemoteViewsService.class);
-        views.setRemoteAdapter(R.id.lv_topic_list, intent);
-        views.setEmptyView(R.id.lv_topic_list, R.id.layout_empty);
+        views.setRemoteAdapter(R.id.flipper, intent);
+        views.setEmptyView(R.id.flipper, R.id.layout_empty);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.lv_topic_list);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.flipper);
     }
 
     @Override

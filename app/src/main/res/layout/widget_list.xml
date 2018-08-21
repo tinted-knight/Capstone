@@ -9,10 +9,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/lv_topic_list"
+        <AdapterViewFlipper
+            android:id="@+id/flipper"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        <!--<ListView-->
+            <!--android:id="@+id/lv_topic_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
     </LinearLayout>
 

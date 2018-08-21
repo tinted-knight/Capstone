@@ -6,6 +6,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.local_db.ReadCardEntity;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
 
@@ -25,7 +26,7 @@ class TopicListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     private Context context;
 
-    private List<TopicEntity> data;
+    private List<ReadCardEntity> data;
 
     TopicListRemoteViewsFactory(Context appContext) {
         this.context = appContext;
@@ -38,7 +39,8 @@ class TopicListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     @Override public void onDataSetChanged() {
         Timber.i("onDataSetChanged");
         TopicListRepo repo = new TopicListRepo(context);
-        data = repo.getAllForWidget();
+//        data = repo.getAllForWidget();
+        data = repo.getAllCards();
     }
 
     @Override public void onDestroy() {
@@ -56,9 +58,8 @@ class TopicListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         if (data == null || data.size() == 0) return null;
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_item);
-        TopicEntity item = data.get(position);
-        views.setTextViewText(R.id.tv_item, item.titleFrom);
-        Timber.i(item.titleFrom);
+        ReadCardEntity item = data.get(position);
+        views.setTextViewText(R.id.tv_item, item.to);
         return views;
     }
 

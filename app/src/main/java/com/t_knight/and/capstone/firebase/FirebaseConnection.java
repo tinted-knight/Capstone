@@ -58,8 +58,7 @@ public class FirebaseConnection {
 
     public LiveData<Topic> getTopicById(Integer id) {
         Query query = dbRef.child("topics").child(String.valueOf(id));
-        MutableLiveData<Topic> topic;
-        topic = new MutableLiveData<>();
+        MutableLiveData<Topic> topic = new MutableLiveData<>();
         query.addListenerForSingleValueEvent(new SingleTopicValueEventListener(topic));
 
         return topic;
@@ -117,6 +116,11 @@ public class FirebaseConnection {
 
     public void pinTopic(TopicEntity topicEntity) {
         local.pinTopic(topicEntity);
+    }
+
+    public void pinTopicForRead(int topicId) {
+        Query query = dbRef.child("topics").child(String.valueOf(topicId));
+        query.addListenerForSingleValueEvent(new SingleTopicValueEventListener(local));
     }
 
 }

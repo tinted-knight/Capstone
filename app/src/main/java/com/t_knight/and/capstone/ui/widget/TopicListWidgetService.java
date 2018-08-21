@@ -52,7 +52,7 @@ public class TopicListWidgetService extends IntentService {
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                 new ComponentName(this, TopicListWidget.class));
         Timber.i("doActionUpdateList");
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.lv_topic_list);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.flipper);
         TopicListWidget.updateAppWidgetsList(this, appWidgetManager, appWidgetIds);
     }
 

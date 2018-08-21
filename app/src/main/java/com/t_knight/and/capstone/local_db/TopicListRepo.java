@@ -4,8 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
 import com.t_knight.and.capstone.AppExecutors;
+import com.t_knight.and.capstone.model.SingleCard;
+import com.t_knight.and.capstone.model.Topic;
 import com.t_knight.and.capstone.model.TopicDescription;
-import com.t_knight.and.capstone.ui.widget_new.TopicWidgetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +72,25 @@ public class TopicListRepo {
         });
     }
 
+    public void pinTopicRead(final Topic topic) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override public void run() {
+                List<ReadCardEntity> cardEntities = new ArrayList<>();
+                for (SingleCard card : topic.getCardContent()) {
+                    cardEntities.add(new ReadCardEntity(card));
+                }
+                dao.clearCards();
+                dao.insertReadCards(cardEntities.toArray(new ReadCardEntity[]{}));
+            }
+        });
+    }
+
     public List<TopicEntity> getAllForWidget() {
         return dao.getAllForWidget();
+    }
+
+    public List<ReadCardEntity> getAllCards() {
+        return dao.getAllCards();
     }
 
     public LiveData<List<TopicEntity>> getAll() {
@@ -81,5 +99,13 @@ public class TopicListRepo {
 
     public TopicEntity getPinned() {
         return dao.getPinned();
+    }
+
+    public ReadCardEntity getCard(int id) {
+        return dao.getCard(id);
+    }
+
+    public ReadCardEntity getFirstCard() {
+        return dao.getFirstCard();
     }
 }
