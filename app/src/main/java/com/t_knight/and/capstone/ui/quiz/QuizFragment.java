@@ -3,12 +3,10 @@ package com.t_knight.and.capstone.ui.quiz;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -33,7 +31,7 @@ import com.t_knight.and.capstone.ui.custom_views.QuizTextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindDrawable;
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -49,9 +47,9 @@ public class QuizFragment extends Fragment {
     @BindView(R.id.tv_hint) TextView tvHint;
     @BindView(R.id.fl_quiz_card) FrameLayout flQuizCard;
 
-    @BindDrawable(R.drawable.quizspot_bg_error) Drawable drawableBgError;
-    @BindDrawable(R.drawable.quizspot_bg_correct) Drawable drawableBgCorrect;
-    @BindDrawable(R.drawable.quizspot_bg_mispell) Drawable drawableBgMispell;
+    @BindColor(R.color.colorQuizSpotBgError) int colorError;
+    @BindColor(R.color.colorQuizSpotBgCorrect) int colorCorrect;
+    @BindColor(R.color.colorQuizSpotBgMispell) int colorMisple;
 
     private List<EditText> etQuizAnswers;
     private QuizViewModel viewModel;
@@ -107,7 +105,6 @@ public class QuizFragment extends Fragment {
                     hideQuizSpots(
                             quizCard.getText(),
                             quizCard.getSpots().subList(0, viewModel.getDifficulty()));
-//                    tvQuiz.setText(quizCard.getText());
                     showQuizEditTexts();
                 }
             }
@@ -139,20 +136,16 @@ public class QuizFragment extends Fragment {
             private void highlightError(EditText editText, String hint) {
                 editText.setText("");
                 editText.setHint(hint);
-//                editText.setHintTextColor(Color.RED);
-                editText.setBackground(drawableBgError);
+                editText.setBackgroundColor(colorError);
             }
 
             private void highlightMisspell(EditText editText, String hint) {
-                editText.setText("");
-                editText.setHint(hint);
-//                editText.setHintTextColor(Color.BLUE);
-                editText.setBackground(drawableBgMispell);
+                editText.setText(hint);
+                editText.setBackgroundColor(colorMisple);
             }
 
             private void highlightCorrect(EditText editText) {
-//                editText.setBackgroundColor(Color.GREEN);
-                editText.setBackground(drawableBgCorrect);
+                editText.setBackgroundColor(colorCorrect);
             }
 
         });
@@ -181,7 +174,7 @@ public class QuizFragment extends Fragment {
     private void showQuizEditTexts() {
         clearQuizView();
         // https://stackoverflow.com/questions/7733813/how-can-you-tell-when-a-layout-has-been-drawn
-        flQuizCard.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        tvQuiz.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
                 tvQuiz.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
@@ -191,9 +184,12 @@ public class QuizFragment extends Fragment {
                 for (QuizSpotRect quizSpot : tvQuiz.getQuizSpotRects()) {
                     EditText etQuiz = (EditText)
                             inflater.inflate(R.layout.edittext_quizspot, flQuizCard, false);
+//                    QuizEditText etQuiz = (QuizEditText)
+//                            inflater.inflate(R.layout.edittext_quizspot, flQuizCard, false);
                     etQuiz.setFilters(new InputFilter[]{
                             new InputFilter.LengthFilter(quizSpot.getWordLength())});
                     quizSpot.adjustOffset(tvQuiz);
+//                    etQuiz.init(quizSpot);
                     etQuiz.addOnLayoutChangeListener(new QuizEditTextLayoutChangeListener(quizSpot));
                     etQuiz.setTag(i++);
                     etQuiz.setId(View.generateViewId());
