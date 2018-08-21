@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#607D8B</color>
+    <color name="colorStatusBar">#000000</color>
+    <color name="colorAppBar">#ffffff</color>
+    <color name="colorBackground">#fffafafa</color>
+    <color name="colorAccent">#FF5722</color>
 
     <color name="colorBtnWidget">#55ffffff</color>
+    <color name="colorHintBackground">#7fe4e0b0</color>
+
+    <color name="colorBtnRead">#607D8B</color>
+
+    <color name="colorQuizSpotText">#212121</color>
+    <color name="colorQuizSpotBg">#C5CAE9</color>
+    <color name="colorQuizSpotBgError">#FFCDD2</color>
+    <color name="colorQuizSpotBgCorrect">#81C784</color>
+    <color name="colorQuizSpotBgMispell">#90CAF9</color>
 
 </resources>

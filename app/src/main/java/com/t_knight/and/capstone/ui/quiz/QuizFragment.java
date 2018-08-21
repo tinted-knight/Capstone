@@ -3,6 +3,7 @@ package com.t_knight.and.capstone.ui.quiz;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.t_knight.and.capstone.ui.custom_views.QuizTextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,6 +48,10 @@ public class QuizFragment extends Fragment {
     @BindView(R.id.btn_enter) Button btnEnter;
     @BindView(R.id.tv_hint) TextView tvHint;
     @BindView(R.id.fl_quiz_card) FrameLayout flQuizCard;
+
+    @BindDrawable(R.drawable.quizspot_bg_error) Drawable drawableBgError;
+    @BindDrawable(R.drawable.quizspot_bg_correct) Drawable drawableBgCorrect;
+    @BindDrawable(R.drawable.quizspot_bg_mispell) Drawable drawableBgMispell;
 
     private List<EditText> etQuizAnswers;
     private QuizViewModel viewModel;
@@ -133,17 +139,20 @@ public class QuizFragment extends Fragment {
             private void highlightError(EditText editText, String hint) {
                 editText.setText("");
                 editText.setHint(hint);
-                editText.setHintTextColor(Color.RED);
+//                editText.setHintTextColor(Color.RED);
+                editText.setBackground(drawableBgError);
             }
 
             private void highlightMisspell(EditText editText, String hint) {
                 editText.setText("");
                 editText.setHint(hint);
-                editText.setHintTextColor(Color.BLUE);
+//                editText.setHintTextColor(Color.BLUE);
+                editText.setBackground(drawableBgMispell);
             }
 
             private void highlightCorrect(EditText editText) {
-                editText.setBackgroundColor(Color.GREEN);
+//                editText.setBackgroundColor(Color.GREEN);
+                editText.setBackground(drawableBgCorrect);
             }
 
         });
@@ -172,7 +181,7 @@ public class QuizFragment extends Fragment {
     private void showQuizEditTexts() {
         clearQuizView();
         // https://stackoverflow.com/questions/7733813/how-can-you-tell-when-a-layout-has-been-drawn
-        tvQuiz.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        flQuizCard.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
                 tvQuiz.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 

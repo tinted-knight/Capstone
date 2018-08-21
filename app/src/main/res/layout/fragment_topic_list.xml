@@ -7,28 +7,20 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        style="@style/AppTheme.ActionBar"
         android:layout_width="match_parent"
-        android:layout_height="112dp">
+        android:layout_height="56dp">
 
-        <FrameLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_launcher_background" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="bottom"
-                app:title="Application title">
-            </android.support.v7.widget.Toolbar>
-
-        </FrameLayout>
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorBackground"
+            app:layout_scrollFlags="scroll"
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/AppTheme.AppTitleText">
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

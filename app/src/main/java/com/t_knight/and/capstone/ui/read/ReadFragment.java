@@ -52,8 +52,6 @@ public class ReadFragment extends Fragment {
             @Override public void onChanged(@Nullable Topic topic) {
                 if (topic != null) {
                     viewModel.showFirstCard();
-//                    tvTo.setText(topic.getCardContent().get(1).getTo());
-//                    tvFrom.setText(topic.getCardContent().get(1).getFrom());
                 }
             }
         });

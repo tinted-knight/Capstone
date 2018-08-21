@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
+        style="@style/AppTheme.ActionBar"
         android:layout_height="192dp">
 
         <FrameLayout

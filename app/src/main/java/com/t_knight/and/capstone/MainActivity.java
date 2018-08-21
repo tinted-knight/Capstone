@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.firebase.jobdispatcher.Constraint;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         if (savedInstanceState == null) {
             showTopicList();

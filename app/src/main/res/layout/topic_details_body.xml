@@ -54,6 +54,7 @@
         android:layout_marginStart="8dp"
         android:enabled="false"
         android:text="Read"
+        android:theme="@style/BtnRead"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent" />
@@ -67,6 +68,7 @@
         android:layout_marginStart="8dp"
         android:enabled="false"
         android:text="Quiz"
+        android:theme="@style/BtnRead"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline" />

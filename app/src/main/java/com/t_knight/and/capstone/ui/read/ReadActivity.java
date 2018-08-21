@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.t_knight.and.capstone.R;
+import com.t_knight.and.capstone.model.Topic;
 import com.t_knight.and.capstone.model.TopicDescription;
 
 import butterknife.BindView;
@@ -44,10 +45,20 @@ public class ReadActivity extends AppCompatActivity {
                 ReadViewModel.ReadVMFactory factory =
                         new ReadViewModel.ReadVMFactory(getApplication(), topic);
                 viewModel = ViewModelProviders.of(this, factory).get(ReadViewModel.class);
+                registerObservers();
                 showReadFragment();
                 setupNavigationButtons();
             }
         }
+    }
+
+    private void registerObservers() {
+        viewModel.getTopicContent().observe(this, new Observer<Topic>() {
+            @Override public void onChanged(@Nullable Topic topic) {
+                if (topic != null)
+                    toolbar.setTitle(topic.getTitleTo());
+            }
+        });
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
