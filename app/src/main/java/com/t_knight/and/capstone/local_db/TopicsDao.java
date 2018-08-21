@@ -14,6 +14,8 @@ public interface TopicsDao {
 
     @Query("select * from topics") List<TopicEntity> getAllForWidget();
 
+    @Query("select * from topics where pinned == 1") TopicEntity getPinned();
+
     @Query("select * from topics") LiveData<List<TopicEntity>> getAll();
 
     @Insert void insertTopic(TopicEntity... entities);
@@ -21,8 +23,6 @@ public interface TopicsDao {
     @Delete() void clear(TopicEntity... entities);
 
     @Query("update topics set pinned = 0 where pinned = 1") void unpinAll();
-
-    @Query("select * from topics where pinned = 1") TopicEntity getPinned();
 
     @Update() void updateTopic(TopicEntity topicEntity);
 
@@ -33,6 +33,8 @@ public interface TopicsDao {
     @Query("select * from read_cards where _id = :id") ReadCardEntity getCard(int id);
 
     @Query("select * from read_cards") List<ReadCardEntity> getAllCards();
+
+    @Query("select * from read_cards order by _id limit 1") LiveData<ReadCardEntity> widgetUpdate();
 
     @Query("select * from read_cards order by _id limit 1") ReadCardEntity getFirstCard();
 }

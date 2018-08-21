@@ -1,16 +1,17 @@
 package com.t_knight.and.capstone;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.firebase.jobdispatcher.Constraint;
@@ -20,6 +21,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 import com.t_knight.and.capstone.job_dispatcher.TopicListJobService;
+import com.t_knight.and.capstone.local_db.ReadCardEntity;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.helpers.DetailTransition;
@@ -30,6 +32,7 @@ import com.t_knight.and.capstone.ui.main.TopicListAdapter;
 import com.t_knight.and.capstone.ui.main.TopicListFragment;
 import com.t_knight.and.capstone.ui.quiz.QuizActivity;
 import com.t_knight.and.capstone.ui.read.ReadActivity;
+import com.t_knight.and.capstone.ui.widget_new.TopicWidgetService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,11 +42,8 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity
         implements TopicListAdapter.TopicListItemClick, TopicDetailsFragment.OnTopicDetailsInteractionListener {
 
-    public static final String TAG = "TAGG";
     private static final int periodicity = (int) TimeUnit.HOURS.toSeconds(24); // 3 hours
     private static final int interval = (int) TimeUnit.MINUTES.toSeconds(15);
-//    private static final int periodicity = (int) TimeUnit.SECONDS.toSeconds(15); // 3 hours
-//    private static final int interval = (int) TimeUnit.SECONDS.toSeconds(15);
 
     private MainViewModel viewModel;
 
@@ -54,13 +54,22 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        registerObservers();
 
         if (savedInstanceState == null) {
             showTopicList();
             scheduleTopicListSync();
         }
+    }
+
+    private void registerObservers() {
+        viewModel.widgetUpdate().observe(this, new Observer<ReadCardEntity>() {
+            @Override public void onChanged(@Nullable ReadCardEntity readCardEntity) {
+                if (readCardEntity != null) {
+                    TopicWidgetService.startActionUpdate(getApplication());
+                }
+            }
+        });
     }
 
     private void scheduleTopicListSync() {

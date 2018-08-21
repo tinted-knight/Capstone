@@ -2,14 +2,18 @@ package com.t_knight.and.capstone.ui.widget_new;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
+import android.arch.lifecycle.LiveData;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.local_db.ReadCardEntity;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
 import com.t_knight.and.capstone.model.helpers.AppPreferences;
+
+import timber.log.Timber;
 
 public class TopicWidgetService extends IntentService {
 
@@ -80,6 +84,7 @@ public class TopicWidgetService extends IntentService {
         TopicListRepo repo = new TopicListRepo(getApplicationContext());
         ReadCardEntity cardEntity = repo.getCard(cardId);
         if (cardEntity != null) {
+            Timber.i(cardEntity.to);
             updateWidget(cardEntity.to, cardEntity.from);
             return true;
         }
@@ -89,10 +94,12 @@ public class TopicWidgetService extends IntentService {
     private void updateWidgetDefault() {
         TopicListRepo repo = new TopicListRepo(getApplicationContext());
         ReadCardEntity cardEntity = repo.getFirstCard();
-
-        new AppPreferences(this).setCardId(cardEntity.id);
-
-        updateWidget(cardEntity.to, cardEntity.from);
+        if (cardEntity != null) {
+            new AppPreferences(this).setCardId(cardEntity.id);
+            updateWidget(cardEntity.to, cardEntity.from);
+        } else {
+            updateWidget("tap to update", "");
+        }
     }
 
     private void updateWidget(String to, String from) {

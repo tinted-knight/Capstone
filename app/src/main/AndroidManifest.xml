@@ -37,7 +37,7 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
-
+        <!-- Home Screen Widget -->
         <receiver android:name=".ui.widget_new.AppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

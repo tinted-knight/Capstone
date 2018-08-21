@@ -62,11 +62,11 @@ public class QuizViewModel extends AndroidViewModel {
         // TODO set navigation buttons state
     }
 
-    public void checkAnswers2(List<String> answerList) {
+    public void checkAnswers(List<String> answerList) {
         if (answerList != null && answerList.size() > 0) {
             QuizCard quizCard = currentQuizCard.getValue();
             int i = 0;
-            List<QuizHint> checkResult2 = new ArrayList<>(answerList.size());
+            List<QuizHint> checkResult = new ArrayList<>(answerList.size());
             List<String> correctAnswers = new ArrayList<>();
             for (String answer : answerList) {
                 QuizSpot spot = quizCard.getSpots().get(i);
@@ -80,37 +80,21 @@ public class QuizViewModel extends AndroidViewModel {
 
                 if (answer.equalsIgnoreCase(correctAnswers.get(0))) {
                     // absolutely right
-                    checkResult2.add(new QuizHint(true, ""));
+                    checkResult.add(new QuizHint(true, ""));
                 }
                 else {
                     if (correctAnswers.contains(answer.toLowerCase())) {
                         // right but not absolutely
-                        checkResult2.add(new QuizHint(true, spot.getAnswer()));
+                        checkResult.add(new QuizHint(true, spot.getAnswer()));
                     } else {
                         // wrong
-                        checkResult2.add(new QuizHint(false, spot.getAnswer()));
+                        checkResult.add(new QuizHint(false, spot.getAnswer()));
                     }
                 }
                 i++;
                 correctAnswers.clear();
             }
-            answersCheckResult.setValue(checkResult2);
-        }
-    }
-
-    public void checkAnswers(List<String> answerList) {
-        if (answerList != null && answerList.size() > 0) {
-            QuizCard quizCard = currentQuizCard.getValue();
-            int i = 0;
-            List<String> checkResult = new ArrayList<>(answerList.size());
-            for (String answer : answerList) {
-                String correctAnswer = quizCard.getSpots().get(i++).getAnswer();
-                if (!answer.equalsIgnoreCase(correctAnswer))
-                    checkResult.add(correctAnswer);
-                else
-                    checkResult.add(null);
-            }
-//            answersCheckResult.setValue(checkResult);
+            answersCheckResult.setValue(checkResult);
         }
     }
 

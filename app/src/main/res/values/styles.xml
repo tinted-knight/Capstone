@@ -36,10 +36,18 @@
         <item name="colorAccent">@color/colorBtnRead</item>
     </style>
 
+    <style name="AppTheme.TopicTitleDetails" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
     <!--Read Screen-->
     <style name="AppTheme.ReadTextView" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingMultiplier">1.25</item>
+    </style>
+
+    <style name="AppTheme.ToolbarReadScreen" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorTintDark</item>
     </style>
 
     <!--Quiz Screen-->

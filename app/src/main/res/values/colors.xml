@@ -21,4 +21,6 @@
     <color name="colorQuizSpotBgCorrect">#81C784</color>
     <color name="colorQuizSpotBgMispell">#90CAF9</color>
 
+    <color name="colorTintDark">#000000</color>
+
 </resources>

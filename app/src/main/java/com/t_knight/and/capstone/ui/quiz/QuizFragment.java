@@ -81,7 +81,7 @@ public class QuizFragment extends Fragment {
                 List<String> answers = new ArrayList<>(etQuizAnswers.size());
                 for (EditText answer : etQuizAnswers)
                     answers.add(answer.getText().toString().trim());
-                viewModel.checkAnswers2(answers);
+                viewModel.checkAnswers(answers);
             }
         });
         tvHint.setOnClickListener(new View.OnClickListener() {
@@ -184,16 +184,13 @@ public class QuizFragment extends Fragment {
                 for (QuizSpotRect quizSpot : tvQuiz.getQuizSpotRects()) {
                     EditText etQuiz = (EditText)
                             inflater.inflate(R.layout.edittext_quizspot, flQuizCard, false);
-//                    QuizEditText etQuiz = (QuizEditText)
-//                            inflater.inflate(R.layout.edittext_quizspot, flQuizCard, false);
                     etQuiz.setFilters(new InputFilter[]{
                             new InputFilter.LengthFilter(quizSpot.getWordLength())});
                     quizSpot.adjustOffset(tvQuiz);
-//                    etQuiz.init(quizSpot);
                     etQuiz.addOnLayoutChangeListener(new QuizEditTextLayoutChangeListener(quizSpot));
-                    etQuiz.setTag(i++);
-                    etQuiz.setId(View.generateViewId());
-                    etQuiz.setOnFocusChangeListener(etClick);
+                    etQuiz.setTag(i++); // need to match with hint TextView
+                    etQuiz.setId(View.generateViewId()); // need for d-pad and tab navigation
+                    etQuiz.setOnFocusChangeListener(showHint);
 
                     flQuizCard.addView(etQuiz);
                     etQuizAnswers.add(etQuiz);
@@ -214,7 +211,7 @@ public class QuizFragment extends Fragment {
         etQuizAnswers.get(maxId).setNextFocusForwardId(firstId);
     }
 
-    private View.OnFocusChangeListener etClick = new View.OnFocusChangeListener() {
+    private View.OnFocusChangeListener showHint = new View.OnFocusChangeListener() {
         @Override public void onFocusChange(View v, boolean hasFocus) {
             if (hasFocus) tvHint.setText(viewModel.getQuizHint((Integer) v.getTag()));
         }
@@ -228,15 +225,15 @@ public class QuizFragment extends Fragment {
     }
 
     private void hideQuizSpots(String quizString, List<QuizSpot> spots) {
-        SpannableString ss = new SpannableString(quizString + "\n ");
+        SpannableString hideQuizSpots = new SpannableString(quizString + "\n ");
         for (QuizSpot spot : spots) {
-            ss.setSpan(
+            hideQuizSpots.setSpan(
                     new ForegroundColorSpan(Color.TRANSPARENT),
                     spot.getStart(),
                     spot.getEnd(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             );
         }
-        tvQuiz.setText(ss);
+        tvQuiz.setText(hideQuizSpots);
     }
 }

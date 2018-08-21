@@ -9,18 +9,14 @@ import android.support.annotation.NonNull;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
+import com.t_knight.and.capstone.local_db.ReadCardEntity;
 import com.t_knight.and.capstone.local_db.TopicEntity;
 import com.t_knight.and.capstone.model.FireContent;
-import com.t_knight.and.capstone.model.Topic;
 import com.t_knight.and.capstone.model.TopicDescription;
-import com.t_knight.and.capstone.model.helpers.AppPreferences;
-import com.t_knight.and.capstone.ui.widget_new.TopicWidgetService;
 
 import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
-
-    private static final String TAG = "TAGG";
 
     private MutableLiveData<FireContent> topicList;
     private LiveData<List<TopicEntity>> topics;
@@ -30,7 +26,6 @@ public class MainViewModel extends AndroidViewModel {
 
     private FirebaseConnection repo;
     private final StorageReference storageRef;
-
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -54,10 +49,6 @@ public class MainViewModel extends AndroidViewModel {
         return activeTopic;
     }
 
-    public LiveData<List<Topic>> getAllTopicsContent() {
-        return repo.getAllTopicsContent();
-    }
-
     public MutableLiveData<FireContent> loadFromNetwork() {
         // TODO if (topicList != null) return topicList
         topicList = repo.getAllTopicsDescription();
@@ -77,7 +68,12 @@ public class MainViewModel extends AndroidViewModel {
     public void pinTopicToWidget(TopicEntity topic) {
         repo.pinTopic(topic);
         repo.pinTopicForRead(topic.topicId);
-        TopicWidgetService.startActionUpdate(getApplication());
+    }
+
+    public LiveData<ReadCardEntity> widgetUpdate() {
+        // smth like a listener to update a home screen widget after insert operation in background
+        // if there is smth in the table then should update widget
+        return repo.widgetUpdate();
     }
 
     public StorageReference getStorageRef(String s) {
