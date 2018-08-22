@@ -11,7 +11,6 @@ import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.model.Topic;

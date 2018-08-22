@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--
-Refer to App Widget Documentation for margin information
-http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
-    -->
-    <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="dimen_appbar_height">56dp</dimen>
+
+    <dimen name="dimen_quiz_top_translation_height">72dp</dimen>
+    <dimen name="dimen_quiz_top_translation_horiz_padding">4dp</dimen>
+    <dimen name="dimen_quiz_spot_horiz_padding">4dp</dimen>
+    <dimen name="dimen_quiz_card_horiz_margin">8dp</dimen>
+    <dimen name="dimen_quiz_card_top_margin">4dp</dimen>
+    <dimen name="dimen_quiz_card_bottom_margin">0dp</dimen>
+    <dimen name="dimen_quiz_card_height">140dp</dimen>
+    <dimen name="dimen_quiz_card_text_horiz_margin">8dp</dimen>
+    <dimen name="dimen_quiz_card_text_vert_margin">4dp</dimen>
+    <dimen name="dimen_quiz_card_text_line_spacing">4sp</dimen>
+    <dimen name="dimen_quiz_btn_check_horiz_margin">4dp</dimen>
+    <dimen name="dimen_quiz_card_hint_horiz_margin">4dp</dimen>
+    <dimen name="dimen_quiz_card_hint_vert_margin">4dp</dimen>
+    <dimen name="dimen_quiz_card_hint_padding">8dp</dimen>
+
+    <dimen name="dimen_read_content_margin">8dp</dimen>
+    <dimen name="dimen_read_horiz_margin">8dp</dimen>
+    <dimen name="dimen_read_topcard_margin">4dp</dimen>
+    <dimen name="dimen_read_anycard_text_margin">8dp</dimen>
+    <dimen name="dimen_read_bottomcard_margin">4dp</dimen>
+
+    <dimen name="dimen_topic_list_margin">8dp</dimen>
+    <dimen name="dimen_topic_list_item_margin">4dp</dimen>
+    <dimen name="dimen_topic_list_item_cover_height">150dp</dimen>
+    <dimen name="dimen_topic_list_item_title_horiz_margin">8dp</dimen>
+    <dimen name="dimen_topic_list_item_title_vert_margin">4dp</dimen>
+    <dimen name="dimen_topic_list_item_pin_margin">8dp</dimen>
+
+    <dimen name="dimen_details_appbar_height">192dp</dimen>
+    <dimen name="dimen_details_desc_card_margin">8dp</dimen>
+    <dimen name="dimen_details_desc_card_text_margin">8dp</dimen>
+    <dimen name="dimen_details_subtitle_card_margin">8dp</dimen>
+    <dimen name="dimen_details_subtitle_card_text_margin">8dp</dimen>
+    <dimen name="dimen_details_bottom_btn_margin">8dp</dimen>
+    <dimen name="dimen_details_diff_card_margin">8dp</dimen>
+    <dimen name="dimen_details_diff_card_text_margin">8dp</dimen>
+
+    <dimen name="dimen_widget_padding">8dp</dimen>
+    <dimen name="dimen_app_widget_height">110dp</dimen>
+    <dimen name="dimen_app_widget_width">180dp</dimen>
 
 </resources>

@@ -14,8 +14,6 @@ public interface TopicsDao {
 
     @Query("select * from topics") List<TopicEntity> getAllForWidget();
 
-    @Query("select * from topics where pinned == 1") TopicEntity getPinned();
-
     @Query("select * from topics") LiveData<List<TopicEntity>> getAll();
 
     @Insert void insertTopic(TopicEntity... entities);
@@ -31,8 +29,6 @@ public interface TopicsDao {
     @Query("delete from read_cards") void clearCards();
 
     @Query("select * from read_cards where _id = :id") ReadCardEntity getCard(int id);
-
-    @Query("select * from read_cards") List<ReadCardEntity> getAllCards();
 
     @Query("select * from read_cards order by _id limit 1") LiveData<ReadCardEntity> widgetUpdate();
 

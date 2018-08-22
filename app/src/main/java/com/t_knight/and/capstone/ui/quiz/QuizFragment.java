@@ -40,8 +40,6 @@ import butterknife.ButterKnife;
  */
 public class QuizFragment extends Fragment {
 
-    private static final String TAG = "tagg";
-
     @BindView(R.id.tv_quiz) QuizTextView tvQuiz;
     @BindView(R.id.btn_enter) Button btnEnter;
     @BindView(R.id.tv_hint) TextView tvHint;
@@ -120,7 +118,7 @@ public class QuizFragment extends Fragment {
                             allCorrect = false;
                             highlightError(etQuizAnswers.get(i), quizHint.getHint());
                         } else {
-                            if (!quizHint.isHintEmpty()) {
+                            if (quizHint.notHintEmpty()) {
                                 highlightMisspell(etQuizAnswers.get(i), quizHint.getHint());
                             } else {
                                 highlightCorrect(etQuizAnswers.get(i));
@@ -211,7 +209,7 @@ public class QuizFragment extends Fragment {
         etQuizAnswers.get(maxId).setNextFocusForwardId(firstId);
     }
 
-    private View.OnFocusChangeListener showHint = new View.OnFocusChangeListener() {
+    private final View.OnFocusChangeListener showHint = new View.OnFocusChangeListener() {
         @Override public void onFocusChange(View v, boolean hasFocus) {
             if (hasFocus) tvHint.setText(viewModel.getQuizHint((Integer) v.getTag()));
         }

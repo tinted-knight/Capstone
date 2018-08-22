@@ -17,21 +17,16 @@ import com.t_knight.and.capstone.model.helpers.NavigationButtonsLiveData;
 
 import java.util.List;
 
-public class ReadViewModel extends AndroidViewModel {
+class ReadViewModel extends AndroidViewModel {
 
-    private static final String TAG = "TAGG";
-
-    //    private final FirebaseConnection repo;
-    private final TopicDescription topicDescription;
-    private LiveData<Topic> topicContent;
+    private final LiveData<Topic> topicContent;
     private int currentCard;
-    private MutableLiveData<SingleCard> singleCard;
-    private NavigationButtonsLiveData navBtnState;
+    private final MutableLiveData<SingleCard> singleCard;
+    private final NavigationButtonsLiveData navBtnState;
 
     private ReadViewModel(@NonNull Application application, FirebaseConnection repository, TopicDescription topicDescription) {
         super(application);
 //        repo = repository;
-        this.topicDescription = topicDescription;
         navBtnState = new NavigationButtonsLiveData();
         singleCard = new MutableLiveData<>();
         topicContent = repository.getTopicById(topicDescription.getId());

@@ -11,21 +11,21 @@ public class TopicEntity {
 
     @PrimaryKey
     @ColumnInfo(name = "_id")
-    public int topicId;
+    public final int topicId;
 
-    public String titleFrom;
+    public final String titleFrom;
 
-    public String titleTo;
+    public final String titleTo;
 
-    public String description;
+    public final String description;
 
-    public String coverUrl;
+    public final String coverUrl;
 
-    public String from;
+    public final String from;
 
-    public String to;
+    public final String to;
 
-    public int wordCount;
+    public final int wordCount;
 
     public boolean pinned;
 

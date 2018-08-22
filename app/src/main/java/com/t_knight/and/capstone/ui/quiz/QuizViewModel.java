@@ -7,7 +7,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
 
 import com.t_knight.and.capstone.firebase.FirebaseConnection;
 import com.t_knight.and.capstone.model.helpers.QuizHint;
@@ -18,15 +17,15 @@ import com.t_knight.and.capstone.model.quiz.QuizSpot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuizViewModel extends AndroidViewModel {
+class QuizViewModel extends AndroidViewModel {
 
-    private LiveData<Quiz> quiz;
-    private MutableLiveData<QuizCard> currentQuizCard;
+    private final LiveData<Quiz> quiz;
+    private final MutableLiveData<QuizCard> currentQuizCard;
     private int currentCardId;
     private final int difficulty;
 
     //    private List<String> answers;
-    private MutableLiveData<List<QuizHint>> answersCheckResult;
+    private final MutableLiveData<List<QuizHint>> answersCheckResult;
 
     private QuizViewModel(@NonNull Application application, FirebaseConnection repository, int topicId, int difficulty) {
         super(application);

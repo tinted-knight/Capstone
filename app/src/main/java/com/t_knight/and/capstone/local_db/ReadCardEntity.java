@@ -13,9 +13,9 @@ public class ReadCardEntity {
     @ColumnInfo(name = "_id")
     public int id;
 
-    public String from;
+    public final String from;
 
-    public String to;
+    public final String to;
 
     public ReadCardEntity(String from, String to) {
         this.from = from;

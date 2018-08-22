@@ -19,13 +19,13 @@ import java.util.List;
 
 public class FirebaseConnection {
 
-    private DatabaseReference dbRef;
+    private final DatabaseReference dbRef;
 
     private final MutableLiveData<FireContent> topicList;
     //Firebase
     private static FirebaseConnection instance;
     // Local
-    private TopicListRepo local;
+    private final TopicListRepo local;
 
     public static FirebaseConnection getInstance(Context context) {
         if (instance == null)
@@ -45,16 +45,6 @@ public class FirebaseConnection {
     // ================================
     // Firebase
     // ================================
-
-    public LiveData<List<Topic>> getAllTopicsContent() {
-        Query query = dbRef.child("topics");
-
-        MutableLiveData<List<Topic>> topicsContent;
-        topicsContent = new MutableLiveData<>();
-        query.addListenerForSingleValueEvent(new TopicValueEventListener(topicsContent));
-
-        return topicsContent;
-    }
 
     public LiveData<Topic> getTopicById(Integer id) {
         Query query = dbRef.child("topics").child(String.valueOf(id));

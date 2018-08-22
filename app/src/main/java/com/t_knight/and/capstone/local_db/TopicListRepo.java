@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TopicListRepo {
 
-    private TopicsDao dao;
+    private final TopicsDao dao;
 
     public TopicListRepo(Context context) {
         dao = AppDatabase.getInstance(context).topicsDao();

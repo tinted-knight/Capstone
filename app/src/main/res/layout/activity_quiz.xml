@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,8 +9,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
         style="@style/AppTheme.Toolbar"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_quiz_top_translation_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +19,7 @@
         <TextView
             android:id="@+id/tv_translation"
             style="@style/AppTheme.QuizCardTitle"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/dimen_quiz_top_translation_horiz_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/test_quiz_title" />
@@ -29,7 +28,7 @@
 
     <FrameLayout
         android:id="@+id/flQuiz"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

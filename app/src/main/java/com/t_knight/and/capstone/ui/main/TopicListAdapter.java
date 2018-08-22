@@ -28,7 +28,7 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
     private List<TopicEntity> data;
     private final TopicListItemClick listener;
 
-    private StorageReference reference = FirebaseStorage.getInstance().getReference();
+    private final StorageReference reference = FirebaseStorage.getInstance().getReference();
 
     TopicListAdapter(TopicListItemClick listener) {
         this.listener = listener;

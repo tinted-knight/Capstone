@@ -2,13 +2,11 @@ package com.t_knight.and.capstone.ui.widget_new;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
-import android.arch.lifecycle.LiveData;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.local_db.ReadCardEntity;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
 import com.t_knight.and.capstone.model.helpers.AppPreferences;
@@ -17,9 +15,9 @@ import timber.log.Timber;
 
 public class TopicWidgetService extends IntentService {
 
-    public static final String ACTION_UPDATE_WIDGET = "com.t_knight.and.capstone.update_widget2";
-    public static final String ACTION_CARD_NEXT = "com.t_knight.and.capstone.card_next";
-    public static final String ACTION_CARD_PREVIOUS = "com.t_knight.and.capstone.card_previous";
+    private static final String ACTION_UPDATE_WIDGET = "com.t_knight.and.capstone.update_widget2";
+    private static final String ACTION_CARD_NEXT = "com.t_knight.and.capstone.card_next";
+    private static final String ACTION_CARD_PREVIOUS = "com.t_knight.and.capstone.card_previous";
 
     public TopicWidgetService() {
         super(TopicWidgetService.class.getSimpleName());

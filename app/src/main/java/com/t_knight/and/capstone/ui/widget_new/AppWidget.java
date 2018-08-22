@@ -11,9 +11,9 @@ import com.t_knight.and.capstone.R;
 
 public class AppWidget extends AppWidgetProvider {
 
-    public static final String SELF_ACTION_NEXT = "action_next";
-    public static final String SELF_ACTION_PREVIOUS = "action_previous";
-    public static final String SELF_ACTION_UPDATE = "action_update";
+    private static final String SELF_ACTION_NEXT = "action_next";
+    private static final String SELF_ACTION_PREVIOUS = "action_previous";
+    private static final String SELF_ACTION_UPDATE = "action_update";
 
     static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
                                  int[] appWidgetIds, String to, String from) {
@@ -21,8 +21,8 @@ public class AppWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId, to, from);
     }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, String to, String from) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId, String to, String from) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);

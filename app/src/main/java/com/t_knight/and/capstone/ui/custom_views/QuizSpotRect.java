@@ -6,9 +6,10 @@ import android.widget.TextView;
 public class QuizSpotRect {
 
     private int left, right, top, bottom;
-    private int startOffset, endOffset;
+    private final int startOffset;
+    private final int endOffset;
 
-    public QuizSpotRect(int left, int right, int top, int bottom, int startOffset, int endOffset) {
+    private QuizSpotRect(int left, int right, int top, int bottom, int startOffset, int endOffset) {
         this.left = left;
         this.right = right;
         this.top = top;
@@ -17,7 +18,7 @@ public class QuizSpotRect {
         this.endOffset = endOffset;
     }
 
-    public QuizSpotRect(Rect rect, int startOffset, int endOffset) {
+    QuizSpotRect(Rect rect, int startOffset, int endOffset) {
         this(rect.left, rect.right, rect.top, rect.bottom, startOffset, endOffset);
     }
 
@@ -26,18 +27,6 @@ public class QuizSpotRect {
         right += parent.getLeft();
         top += parent.getTop();
         bottom += parent.getTop();
-    }
-
-    public void setOffsetLeft(int offset) {
-        this.left += offset;
-    }
-
-    public void setOffsetRight(int offset) {
-        this.right += offset;
-    }
-
-    public void setOffsetTop(int offset) {
-        this.top += offset;
     }
 
     public int getLeft() {

@@ -22,9 +22,8 @@ public class QuizHint extends android.support.v4.util.Pair<Boolean, String> {
         return second;
     }
 
-    public boolean isHintEmpty() {
-        if (second == null) return true;
-        return second.isEmpty();
+    public boolean notHintEmpty() {
+        return second != null && !second.isEmpty();
     }
 
 }

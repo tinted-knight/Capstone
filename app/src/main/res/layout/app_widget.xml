@@ -4,13 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:padding="@dimen/dimen_widget_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_to"
-        android:text="to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -22,8 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_weight="1"
-        android:text="from" />
+        android:layout_weight="1" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -33,7 +31,7 @@
         <Button
             android:id="@+id/btn_previous"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="prev"
+            android:text="@string/btn_prev"
             android:textAlignment="textStart"
             android:layout_weight="1"
             android:layout_width="wrap_content"
@@ -42,7 +40,7 @@
         <Button
             android:id="@+id/btn_next"
             style="?android:attr/buttonBarButtonStyle"
-            android:text="next"
+            android:text="@string/btn_next"
             android:textAlignment="textEnd"
             android:layout_weight="1"
             android:layout_width="wrap_content"

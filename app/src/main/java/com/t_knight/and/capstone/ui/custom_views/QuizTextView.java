@@ -23,8 +23,6 @@ public class QuizTextView extends AppCompatTextView {
 
     private Rect parentTextViewRect;
 
-    private static final String TAG = "TAGG";
-
     public QuizTextView(Context context) {
         this(context, null);
     }

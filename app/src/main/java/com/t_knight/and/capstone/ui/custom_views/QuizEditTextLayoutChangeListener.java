@@ -4,7 +4,10 @@ import android.view.View;
 
 public class QuizEditTextLayoutChangeListener implements View.OnLayoutChangeListener {
 
-    private int left, top, right, bottom;
+    private final int left;
+    private final int top;
+    private final int right;
+    private final int bottom;
 
     public QuizEditTextLayoutChangeListener(QuizSpotRect quizSpot) {
         left = quizSpot.getLeft();

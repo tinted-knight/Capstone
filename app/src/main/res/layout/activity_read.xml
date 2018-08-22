@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.ToolbarReadScreen"
         style="@style/AppTheme.Toolbar"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/dimen_appbar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,10 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="prev"
-            android:textAlignment="textStart"
-            tools:layout_editor_absoluteX="65dp"
-            tools:layout_editor_absoluteY="92dp" />
+            android:text="@string/btn_prev"
+            android:textAlignment="textStart" />
 
         <Button
             android:id="@+id/btn_next"
@@ -48,10 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="next"
-            android:textAlignment="textEnd"
-            tools:layout_editor_absoluteX="229dp"
-            tools:layout_editor_absoluteY="104dp" />
+            android:text="@string/btn_next"
+            android:textAlignment="textEnd" />
 
     </LinearLayout>
 
@@ -59,10 +55,10 @@
         android:id="@+id/flRead"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/dimen_read_content_margin"
+        android:layout_marginEnd="@dimen/dimen_read_content_margin"
+        android:layout_marginStart="@dimen/dimen_read_content_margin"
+        android:layout_marginTop="@dimen/dimen_read_content_margin"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

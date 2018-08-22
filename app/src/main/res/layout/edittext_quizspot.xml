@@ -5,6 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:cursorVisible="true"
+    android:paddingStart="@dimen/dimen_quiz_spot_horiz_padding"
+    android:paddingEnd="@dimen/dimen_quiz_spot_horiz_padding"
     android:imeOptions="actionNext"
     android:inputType="text"
     tools:text="body" />

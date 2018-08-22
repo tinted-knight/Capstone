@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -126,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override public void onTopicListPinClick(TopicEntity topic) {
-        Toast.makeText(this, "pin topic id = " + String.valueOf(topic.topicId), Toast.LENGTH_SHORT).show();
         viewModel.pinTopicToWidget(topic);
         AnalyticsUtils.logTopicPinned(this, topic);
     }

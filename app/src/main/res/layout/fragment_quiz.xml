@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="0dp">
+    android:layout_marginBottom="@dimen/dimen_quiz_card_top_margin"
+    android:layout_marginEnd="@dimen/dimen_quiz_card_horiz_margin"
+    android:layout_marginStart="@dimen/dimen_quiz_card_horiz_margin"
+    android:layout_marginTop="@dimen/dimen_quiz_card_bottom_margin">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
         <FrameLayout
             android:id="@+id/fl_quiz_card"
             android:layout_width="0dp"
-            android:layout_height="140dp"
+            android:layout_height="@dimen/dimen_quiz_card_height"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,12 +27,12 @@
                 style="@style/AppTheme.QuizText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/dimen_quiz_card_text_vert_margin"
+                android:layout_marginEnd="@dimen/dimen_quiz_card_text_horiz_margin"
+                android:layout_marginStart="@dimen/dimen_quiz_card_text_horiz_margin"
+                android:layout_marginTop="@dimen/dimen_quiz_card_text_vert_margin"
                 android:fontFamily="@font/pt_serif"
-                android:lineSpacingExtra="4sp"
+                android:lineSpacingExtra="@dimen/dimen_quiz_card_text_line_spacing"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,8 +45,9 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="Check"
+            android:layout_marginEnd="@dimen/dimen_quiz_btn_check_horiz_margin"
+            android:layout_marginStart="@dimen/dimen_quiz_btn_check_horiz_margin"
+            android:text="@string/btn_check_quiz"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fl_quiz_card" />
@@ -57,14 +57,15 @@
             style="@style/AppTheme.QuizTextHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginStart="4dp"
-            android:padding="8dp"
+            android:layout_marginBottom="@dimen/dimen_quiz_card_hint_vert_margin"
+            android:layout_marginStart="@dimen/dimen_quiz_card_hint_horiz_margin"
+            android:layout_marginEnd="@dimen/dimen_quiz_card_hint_horiz_margin"
+            android:padding="@dimen/dimen_quiz_card_hint_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fl_quiz_card"
             app:layout_constraintVertical_bias="0.0"
-            tools:text="text view hint" />
+            tools:text="@string/text_hint" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

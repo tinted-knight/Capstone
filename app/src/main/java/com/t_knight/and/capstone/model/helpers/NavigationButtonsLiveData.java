@@ -1,7 +1,6 @@
 package com.t_knight.and.capstone.model.helpers;
 
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.Nullable;
 import android.util.Pair;
 
 public class NavigationButtonsLiveData extends LiveData<Pair<Boolean, Boolean>> {

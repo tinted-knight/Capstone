@@ -19,12 +19,12 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel {
 
     private MutableLiveData<FireContent> topicList;
-    private LiveData<List<TopicEntity>> topics;
+    private final LiveData<List<TopicEntity>> topics;
 
     private int activeTopicId = 0;
     private MutableLiveData<TopicDescription> activeTopic;
 
-    private FirebaseConnection repo;
+    private final FirebaseConnection repo;
     private final StorageReference storageRef;
 
     public MainViewModel(@NonNull Application application) {
