@@ -24,34 +24,31 @@ class ReadViewModel extends AndroidViewModel {
     private final MutableLiveData<SingleCard> singleCard;
     private final NavigationButtonsLiveData navBtnState;
 
-    private ReadViewModel(@NonNull Application application, FirebaseConnection repository, TopicDescription topicDescription) {
+    private ReadViewModel(@NonNull Application application, FirebaseConnection repository,
+                          TopicDescription topicDescription, int currentCard) {
         super(application);
         navBtnState = new NavigationButtonsLiveData();
         singleCard = new MutableLiveData<>();
         topicContent = repository.getTopicById(topicDescription.getId());
+        this.currentCard = currentCard;
     }
 
     public void navigateNextCard() {
         List<SingleCard> cardList = topicContent.getValue().getCardContent();
         if (cardList.size() > currentCard + 1) {
             currentCard++;
-            setCurrentCard();
+            showCurrentCard();
         }
     }
 
     public void navigatePreviousCard() {
         if (currentCard - 1 >= 0) {
             currentCard--;
-            setCurrentCard();
+            showCurrentCard();
         }
     }
 
-    public void showFirstCard() {
-        currentCard = 0;
-        setCurrentCard();
-    }
-
-    private void setCurrentCard() {
+    public void showCurrentCard() {
         List<SingleCard> cardList = topicContent.getValue().getCardContent();
         singleCard.setValue(cardList.get(currentCard));
         if (currentCard + 1 == cardList.size()) {
@@ -79,20 +76,26 @@ class ReadViewModel extends AndroidViewModel {
         return singleCard;
     }
 
+    public int getCurrentCard() {
+        return currentCard;
+    }
+
     public static class ReadVMFactory extends ViewModelProvider.NewInstanceFactory {
 
         private final Application application;
         private final TopicDescription topicTitle;
         private final FirebaseConnection repository;
+        private final int currentCard;
 
-        ReadVMFactory(Application application, TopicDescription topicDescription) {
+        ReadVMFactory(Application application, TopicDescription topicDescription, int currentCard) {
             this.application = application;
             this.topicTitle = topicDescription;
             repository = FirebaseConnection.getInstance(application);
+            this.currentCard = currentCard;
         }
 
         @NonNull @Override public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new ReadViewModel(application, repository, topicTitle);
+            return (T) new ReadViewModel(application, repository, topicTitle, currentCard);
         }
     }
 

@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 public class ReadActivity extends AppCompatActivity {
 
     public static final String EXTRA_TOPIC_ID = "topic_id";
+    private final int DEFAULT_READ_CARD_ID = 0;
 
     @BindView(R.id.btn_next) Button btnNext;
     @BindView(R.id.btn_prev) Button btnPrev;
@@ -38,17 +39,28 @@ public class ReadActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
-            Intent intent = getIntent();
-            if (intent != null) {
-                TopicDescription topic = intent.getParcelableExtra(EXTRA_TOPIC_ID);
-                ReadViewModel.ReadVMFactory factory =
-                        new ReadViewModel.ReadVMFactory(getApplication(), topic);
-                viewModel = ViewModelProviders.of(this, factory).get(ReadViewModel.class);
+            if (getIntent() != null) {
+                viewModel = getViewModel(DEFAULT_READ_CARD_ID);
                 registerObservers();
                 showReadFragment();
-                setupNavigationButtons();
             }
+        } else if (getIntent() != null){
+            viewModel = getViewModel(savedInstanceState.getInt("cc"));
         }
+        setupNavigationButtons();
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("cc", viewModel.getCurrentCard());
+        outState.putParcelable("pp", getIntent().getParcelableExtra(EXTRA_TOPIC_ID));
+        super.onSaveInstanceState(outState);
+    }
+
+    private ReadViewModel getViewModel(int cardIdToShow) {
+        TopicDescription topic = getIntent().getParcelableExtra(EXTRA_TOPIC_ID);
+        ReadViewModel.ReadVMFactory factory =
+                new ReadViewModel.ReadVMFactory(getApplication(), topic, cardIdToShow);
+        return ViewModelProviders.of(this, factory).get(ReadViewModel.class);
     }
 
     private void registerObservers() {

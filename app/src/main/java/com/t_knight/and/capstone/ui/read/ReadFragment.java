@@ -51,7 +51,7 @@ public class ReadFragment extends Fragment {
         viewModel.getTopicContent().observe(this, new Observer<Topic>() {
             @Override public void onChanged(@Nullable Topic topic) {
                 if (topic != null) {
-                    viewModel.showFirstCard();
+                    viewModel.showCurrentCard();
                 }
             }
         });
