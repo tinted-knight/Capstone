@@ -37,14 +37,19 @@
     </style>
 
     <!--Read Screen-->
-    <style name="AppTheme.ReadTextView" parent="TextAppearance.AppCompat.Small">
+    <style name="AppTheme.ReadTextView" parent="">
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
-    <style name="AppTheme.ReadTextViewWidget" parent="AppTheme.ReadTextView">
-        <!--<item name="android:textSize">12sp</item>-->
+    <style name="AppTheme.ReadTextViewWidget" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingMultiplier">1.0</item>
+    </style>
+
+    <style name="AppTheme.ReadTextViewCounter" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="AppTheme.ToolbarReadScreen" parent="Theme.AppCompat.Light">
@@ -58,7 +63,6 @@
 
     <style name="AppTheme.QuizEditText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">16sp</item>
-        <!--<item name="android:textColor">@color/colorQuizSpotText</item>-->
         <item name="android:background">@drawable/quizspot_background</item>
     </style>
 

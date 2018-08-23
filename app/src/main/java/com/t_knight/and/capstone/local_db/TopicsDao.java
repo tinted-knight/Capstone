@@ -30,6 +30,8 @@ public interface TopicsDao {
 
     @Query("select * from read_cards where _id = :id") ReadCardEntity getCard(int id);
 
+    @Query("select * from read_cards") List<ReadCardEntity> getAllCards();
+
     @Query("select * from read_cards order by _id limit 1") LiveData<ReadCardEntity> widgetUpdate();
 
     @Query("select * from read_cards order by _id limit 1") ReadCardEntity getFirstCard();

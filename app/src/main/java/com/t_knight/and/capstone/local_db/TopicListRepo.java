@@ -69,6 +69,10 @@ public class TopicListRepo {
         return dao.getCard(id);
     }
 
+    public List<ReadCardEntity> getAllCards() {
+        return dao.getAllCards();
+    }
+
     public ReadCardEntity getFirstCard() {
         return dao.getFirstCard();
     }

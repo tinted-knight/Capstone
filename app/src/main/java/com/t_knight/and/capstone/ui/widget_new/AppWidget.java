@@ -9,62 +9,73 @@ import android.widget.RemoteViews;
 
 import com.t_knight.and.capstone.R;
 
+import timber.log.Timber;
+
 public class AppWidget extends AppWidgetProvider {
 
-    private static final String SELF_ACTION_NEXT = "action_next";
-    private static final String SELF_ACTION_PREVIOUS = "action_previous";
-    private static final String SELF_ACTION_UPDATE = "action_update";
+    private static final String SELF_ACTION_NEXT = "com.t_knight.and.capstone.action_next";
+    private static final String SELF_ACTION_PREVIOUS = "com.t_knight.and.capstone.action_previous";
 
-    static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
-                                 int[] appWidgetIds, String to, String from) {
+    public static void updateWidgets(Context context, int[] appWidgetIds,
+                                      AppWidgetManager appWidgetManager) {
         for (int appWidgetId : appWidgetIds)
-            updateAppWidget(context, appWidgetManager, appWidgetId, to, from);
+            updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
     private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                        int appWidgetId, String to, String from) {
-
-        // Construct the RemoteViews object
+                                        int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
-        views.setTextViewText(R.id.tv_to, to);
-        views.setTextViewText(R.id.tv_from, from);
+        Intent intent = new Intent(context, TopicListWidgetService.class);
+        views.setRemoteAdapter(R.id.view_flipper, intent);
+        Timber.i("update App Widget >>");
+        views.setDisplayedChild(R.id.view_flipper, 0);
 
-        // set next and prev buttons click listeners
         views.setOnClickPendingIntent(R.id.btn_next,
-                getSelfPendignIntent(context, SELF_ACTION_NEXT));
+                getSelfPendingIntent(context, SELF_ACTION_NEXT, appWidgetId));
         views.setOnClickPendingIntent(R.id.btn_previous,
-                getSelfPendignIntent(context, SELF_ACTION_PREVIOUS));
-        // update widget when user taps it
-        views.setOnClickPendingIntent(R.id.tv_to,
-                getSelfPendignIntent(context, SELF_ACTION_UPDATE));
-        views.setOnClickPendingIntent(R.id.tv_from,
-                getSelfPendignIntent(context, SELF_ACTION_UPDATE));
+                getSelfPendingIntent(context, SELF_ACTION_PREVIOUS, appWidgetId));
 
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    private static PendingIntent getSelfPendignIntent(Context context, String action) {
+    private static PendingIntent getSelfPendingIntent(Context context, String action, int widgetId) {
         Intent intentTo = new Intent(context, AppWidget.class);
         intentTo.setAction(action);
-        return PendingIntent.getBroadcast(context, 0, intentTo, 0);
+        intentTo.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        return PendingIntent.getBroadcast(context, 0, intentTo, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        TopicWidgetService.startActionUpdate(context);
+        updateWidgets(context, appWidgetIds, appWidgetManager);
+        Timber.i("onUpdate >>");
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
         if (SELF_ACTION_PREVIOUS.equals(intent.getAction())) {
-            TopicWidgetService.getPreviousCard(context);
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+            views.showPrevious(R.id.view_flipper);
+            AppWidgetManager.getInstance(context).updateAppWidget(
+                    intent.getIntExtra(
+                            AppWidgetManager.EXTRA_APPWIDGET_ID,
+                            AppWidgetManager.INVALID_APPWIDGET_ID
+                    ),
+                    views
+            );
         } else if (SELF_ACTION_NEXT.equals(intent.getAction())) {
-            TopicWidgetService.getNextCard(context);
-        } else if (SELF_ACTION_UPDATE.equals(intent.getAction())) {
-            TopicWidgetService.startActionUpdate(context);
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+            views.showNext(R.id.view_flipper);
+            AppWidgetManager.getInstance(context).updateAppWidget(
+                    intent.getIntExtra(
+                            AppWidgetManager.EXTRA_APPWIDGET_ID,
+                            AppWidgetManager.INVALID_APPWIDGET_ID
+                    ),
+                    views
+
+            );
         }
+        super.onReceive(context, intent);
     }
 
 }
-
