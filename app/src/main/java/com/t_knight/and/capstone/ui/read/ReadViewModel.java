@@ -26,7 +26,6 @@ class ReadViewModel extends AndroidViewModel {
 
     private ReadViewModel(@NonNull Application application, FirebaseConnection repository, TopicDescription topicDescription) {
         super(application);
-//        repo = repository;
         navBtnState = new NavigationButtonsLiveData();
         singleCard = new MutableLiveData<>();
         topicContent = repository.getTopicById(topicDescription.getId());

@@ -17,17 +17,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.firebase.storage.GlideApp;
 import com.t_knight.and.capstone.model.TopicDescription;
 import com.t_knight.and.capstone.model.helpers.QuizPair;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TopicDetailsFragment extends Fragment {
 
+    private static final String KEY_TOPIC_ID = "topic_id";
     private OnTopicDetailsInteractionListener listener;
 
     @BindView(R.id.tv_description) TextView tvDescription;
@@ -38,10 +39,12 @@ public class TopicDetailsFragment extends Fragment {
     @BindView(R.id.ratingBar) RatingBar ratingBar;
     @BindView(R.id.app_bar_image) ImageView ivCover;
 
+    @BindString(R.string.firebase_store_path) String COVERS_PATH;
+
     private MainViewModel viewModel;
 
     @Override public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt("qwe", viewModel.getActiveTopicId());
+        outState.putInt(KEY_TOPIC_ID, viewModel.getActiveTopicId());
         super.onSaveInstanceState(outState);
     }
 
@@ -60,7 +63,7 @@ public class TopicDetailsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         if (savedInstanceState != null)
-            viewModel.setActiveTopic(savedInstanceState.getInt("qwe"));
+            viewModel.setActiveTopic(savedInstanceState.getInt(KEY_TOPIC_ID));
         registerObservers();
     }
 
@@ -72,7 +75,7 @@ public class TopicDetailsFragment extends Fragment {
                     tvDescription.setText(topicDescription.getDescription());
                     tvDescription2.setText(topicDescription.getTitleFrom());
                     setupBottomButtons(topicDescription);
-                    String stringRef = "covers/" + topicDescription.getCoverUrl();
+                    String stringRef = COVERS_PATH + topicDescription.getCoverUrl();
                     GlideApp.with(ivCover)
                             .load(viewModel.getStorageRef(stringRef))
                             .into(ivCover);

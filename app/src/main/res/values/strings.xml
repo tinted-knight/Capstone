@@ -17,6 +17,6 @@
     <string name="label_choose_difficulty">Choose difficulty</string>
     <string name="text_hint">Text hint</string>
     <string name="transition_name_topic_cover">iv_trans_name</string>
-
+    <string name="widget_tap_to_update">Tap to update widget</string>
 
 </resources>

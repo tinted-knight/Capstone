@@ -20,6 +20,7 @@ import com.t_knight.and.capstone.local_db.TopicEntity;
 import java.util.List;
 
 import butterknife.BindDrawable;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -76,6 +77,9 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
         @BindDrawable(R.drawable.ic_bookmark_border_24dp) Drawable drawableNotPinned;
         @BindDrawable(R.drawable.ic_bookmark_24dp) Drawable drawablePinned;
 
+        @BindString(R.string.firebase_store_path) String COVERS_PATH;
+        @BindString(R.string.transition_name_topic_cover) String IV_TRANSITION_NAME;
+
         TopicListViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -101,12 +105,12 @@ public class TopicListAdapter extends RecyclerView.Adapter<TopicListAdapter.Topi
             } else {
                 ibPin.setImageDrawable(drawableNotPinned);
             }
-            String stringRef = "covers/" + topic.coverUrl;
+            String stringRef = COVERS_PATH + topic.coverUrl;
             GlideApp.with(ivCover)
                     .load(reference.child(stringRef))
                     .into(ivCover);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ivCover.setTransitionName("iv_trans_name" + String.valueOf(topic.topicId));
+                ivCover.setTransitionName(IV_TRANSITION_NAME + String.valueOf(topic.topicId));
             }
         }
     }

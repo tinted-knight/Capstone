@@ -3,15 +3,6 @@ package com.t_knight.and.capstone.model.quiz;
 import java.util.List;
 
 public class QuizSpot {
-    /**
-     * start : 0
-     * end : 4
-     * answer : When
-     * answers : []
-     * hint_prefix :
-     * hint : когда
-     * hint_suffix :
-     */
 
     private int start;
     private int end;

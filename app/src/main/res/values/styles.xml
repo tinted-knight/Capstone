@@ -42,6 +42,11 @@
         <item name="android:lineSpacingMultiplier">1.25</item>
     </style>
 
+    <style name="AppTheme.ReadTextViewWidget" parent="AppTheme.ReadTextView">
+        <!--<item name="android:textSize">12sp</item>-->
+        <item name="android:lineSpacingMultiplier">1.0</item>
+    </style>
+
     <style name="AppTheme.ToolbarReadScreen" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorTintDark</item>
     </style>

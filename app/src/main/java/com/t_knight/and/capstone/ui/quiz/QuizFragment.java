@@ -35,9 +35,6 @@ import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class QuizFragment extends Fragment {
 
     @BindView(R.id.tv_quiz) QuizTextView tvQuiz;
@@ -186,8 +183,10 @@ public class QuizFragment extends Fragment {
                             new InputFilter.LengthFilter(quizSpot.getWordLength())});
                     quizSpot.adjustOffset(tvQuiz);
                     etQuiz.addOnLayoutChangeListener(new QuizEditTextLayoutChangeListener(quizSpot));
-                    etQuiz.setTag(i++); // need to match with hint TextView
-                    etQuiz.setId(View.generateViewId()); // need for d-pad and tab navigation
+                    // need to match with hint TextView
+                    etQuiz.setTag(i++);
+                    // need for d-pad and tab navigation
+                    etQuiz.setId(View.generateViewId());
                     etQuiz.setOnFocusChangeListener(showHint);
 
                     flQuizCard.addView(etQuiz);

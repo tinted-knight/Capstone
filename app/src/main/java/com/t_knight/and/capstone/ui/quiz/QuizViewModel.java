@@ -24,7 +24,6 @@ class QuizViewModel extends AndroidViewModel {
     private int currentCardId;
     private final int difficulty;
 
-    //    private List<String> answers;
     private final MutableLiveData<List<QuizHint>> answersCheckResult;
 
     private QuizViewModel(@NonNull Application application, FirebaseConnection repository, int topicId, int difficulty) {
@@ -58,7 +57,6 @@ class QuizViewModel extends AndroidViewModel {
     private void setCurrentQuizCard() {
         List<QuizCard> cardList = quiz.getValue().getCards();
         currentQuizCard.setValue(cardList.get(currentCardId));
-        // TODO set navigation buttons state
     }
 
     public void checkAnswers(List<String> answerList) {

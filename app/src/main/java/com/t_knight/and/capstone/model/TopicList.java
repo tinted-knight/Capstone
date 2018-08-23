@@ -2,7 +2,7 @@ package com.t_knight.and.capstone.model;
 
 import java.util.List;
 
-public class FireContent {
+public class TopicList {
 
     private int version;
     private List<TopicDescription> topicDescriptions;

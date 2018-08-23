@@ -3,13 +3,6 @@ package com.t_knight.and.capstone.model.quiz;
 import java.util.List;
 
 public class QuizCard {
-    /**
-     * id : 0
-     * text : When we go for an interview, most of us think carefully about what to wear and what to say but hardly ever about how to act – in other words, what our body language is telling the interviewer.
-     * translation : Когда мы идем на интервью, большинство из нас думают о том, что надеть и что говорить.
-     * literal :
-     * spots : [{"start":0,"end":4,"answer":"When","answers":[],"hint_prefix":"","hint":"когда","hint_suffix":""},{"start":8,"end":10,"answer":"we","answers":[],"hint_prefix":"мы ","hint":"идем","hint_suffix":""},{"start":18,"end":27,"answer":"interview","answers":[],"hint_prefix":"","hint":"интервью","hint_suffix":""},{"start":87,"end":90,"answer":"say","answers":[],"hint_prefix":"","hint":"говорить","hint_suffix":""}]
-     */
 
     private int id;
     private String text;

@@ -2,6 +2,7 @@ package com.t_knight.and.capstone.model.helpers;
 
 import android.support.transition.TransitionSet;
 
+// Transition for topic cover
 public class DetailTransition extends TransitionSet {
 
     public DetailTransition() {

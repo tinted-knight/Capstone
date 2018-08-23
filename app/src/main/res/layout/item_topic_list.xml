@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_topic_list_item_cover_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/body_lang"
+            app:srcCompat="@drawable/ic_launcher_background"
             android:contentDescription="@string/topic_cover_image" />
 
         <android.support.constraint.ConstraintLayout

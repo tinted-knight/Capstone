@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="key_topics_content">topics</string>
+    <string name="key_topics_list">content</string>
+    <string name="key_quizes_content">quizzes</string>
+
+    <string name="firebase_store_path">covers/</string>
+
+</resources>

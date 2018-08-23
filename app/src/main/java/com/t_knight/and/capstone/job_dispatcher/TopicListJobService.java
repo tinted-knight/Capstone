@@ -12,8 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.local_db.TopicListRepo;
-import com.t_knight.and.capstone.model.FireContent;
+import com.t_knight.and.capstone.model.TopicList;
 import com.t_knight.and.capstone.model.TopicDescription;
 
 import java.util.List;
@@ -31,10 +32,10 @@ public class TopicListJobService extends JobService {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference dbRef = database.getReference();
 
-                Query query = dbRef.child("content");
+                Query query = dbRef.child(getString(R.string.key_topics_list));
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        FireContent data = dataSnapshot.getValue(FireContent.class);
+                        TopicList data = dataSnapshot.getValue(TopicList.class);
                         fillDatabase(data.getTopicDescriptions());
                     }
 
@@ -60,10 +61,10 @@ public class TopicListJobService extends JobService {
     }
 
     @Override public boolean onStopJob(JobParameters job) {
-        Timber.i("============== onStopJob");
         if (task != null)
             task.cancel(true);
         return true;
+        // retry if smth gone wrong
     }
 
 }

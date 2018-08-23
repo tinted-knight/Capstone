@@ -12,10 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.t_knight.and.capstone.MainViewModel;
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.local_db.TopicEntity;
-import com.t_knight.and.capstone.model.FireContent;
+import com.t_knight.and.capstone.model.TopicList;
 import com.t_knight.and.capstone.model.helpers.AppPreferences;
 
 import java.util.List;
@@ -25,9 +24,6 @@ import butterknife.ButterKnife;
 
 public class TopicListFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private MainViewModel viewModel;
     private TopicListAdapter adapter;
 
@@ -35,15 +31,6 @@ public class TopicListFragment extends Fragment {
 
     public TopicListFragment() {
         // Required empty public constructor
-    }
-
-    public static TopicListFragment newInstance() {
-        TopicListFragment fragment = new TopicListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, "");
-        args.putString(ARG_PARAM2, "");
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -72,8 +59,8 @@ public class TopicListFragment extends Fragment {
     }
 
     private void registerObservers() {
-        viewModel.loadFromNetwork().observe(this, new Observer<FireContent>() {
-            @Override public void onChanged(@Nullable FireContent content) {
+        viewModel.loadFromNetwork().observe(this, new Observer<TopicList>() {
+            @Override public void onChanged(@Nullable TopicList content) {
                 if (content != null){
                     AppPreferences prefs = new AppPreferences(getActivity());
                     if (prefs.isFirstStart() || prefs.isNewerVersion(content.getVersion())) {

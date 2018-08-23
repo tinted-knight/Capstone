@@ -3,6 +3,7 @@ package com.t_knight.and.capstone.model.helpers;
 import android.arch.lifecycle.LiveData;
 import android.util.Pair;
 
+// Buttons Previous and Next in Read Screen
 public class NavigationButtonsLiveData extends LiveData<Pair<Boolean, Boolean>> {
 
     public NavigationButtonsLiveData() {
