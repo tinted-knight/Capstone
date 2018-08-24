@@ -240,7 +240,8 @@ public class QuizFragment extends Fragment {
     }
 
     private void hideQuizSpots(String quizString, List<QuizSpot> spots) {
-        SpannableString hideQuizSpots = new SpannableString(quizString + "\n ");
+        SpannableString hideQuizSpots =
+                new SpannableString(removeUndersopes(quizString, spots) + "\n ");
         for (QuizSpot spot : spots) {
             hideQuizSpots.setSpan(
                     new ForegroundColorSpan(Color.TRANSPARENT),
@@ -250,5 +251,15 @@ public class QuizFragment extends Fragment {
             );
         }
         tvQuiz.setText(hideQuizSpots);
+    }
+
+    private String removeUndersopes(String quizString, List<QuizSpot> spots) {
+        QuizSpot spot = spots.get(spots.size() - 1);
+        String strWithQuizSpots = quizString.substring(0, spot.getEnd());
+        String restOfStringWithoutUnderSopes =
+                quizString.substring(spot.getEnd(), quizString.length())
+                        .replace("_", "");
+
+        return strWithQuizSpots + restOfStringWithoutUnderSopes;
     }
 }
