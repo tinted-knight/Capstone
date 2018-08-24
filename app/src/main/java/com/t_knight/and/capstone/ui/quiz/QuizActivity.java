@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.t_knight.and.capstone.R;
 import com.t_knight.and.capstone.model.quiz.Quiz;
@@ -73,6 +74,16 @@ public class QuizActivity extends AppCompatActivity {
                 if (quizCard != null) {
                     tvTranslation.setText(quizCard.getTranslation());
                 }
+            }
+        });
+        viewModel.getQuizEnd().observe(this, new Observer<Boolean>() {
+            @Override public void onChanged(@Nullable Boolean value) {
+                if (!value) return;
+                Toast.makeText(QuizActivity.this, "quiz end", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(QuizActivity.this, SummaryActivity.class);
+                intent.putParcelableArrayListExtra(SummaryActivity.KEY_QUIZ_RESULT, viewModel.getResults());
+                startActivity(intent);
+                finish();
             }
         });
     }

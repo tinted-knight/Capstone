@@ -25,8 +25,11 @@ class QuizViewModel extends AndroidViewModel {
     private final MutableLiveData<QuizCard> currentQuizCard;
     private int currentCardId;
     private final int difficulty;
-    private List<QuizResult> results;
+    private final MutableLiveData<Boolean> quizEnd;
+
+    private final ArrayList<QuizResult> results;
     private boolean firstTry;
+
 
     private final MutableLiveData<List<QuizHint>> answersCheckResult;
 
@@ -38,6 +41,8 @@ class QuizViewModel extends AndroidViewModel {
         this.difficulty = difficulty;
         results = new ArrayList<>();
         firstTry = true;
+        quizEnd = new MutableLiveData<>();
+        quizEnd.setValue(false);
     }
 
     public void navigateNextCard() {
@@ -46,6 +51,9 @@ class QuizViewModel extends AndroidViewModel {
             currentCardId++;
             setCurrentQuizCard();
             firstTry = true;
+        } else {
+            // if there are no cards left show user summary
+            quizEnd.setValue(true);
         }
     }
 
@@ -134,6 +142,14 @@ class QuizViewModel extends AndroidViewModel {
 
     public int getDifficulty() {
         return difficulty;
+    }
+
+    public LiveData<Boolean> getQuizEnd() {
+        return quizEnd;
+    }
+
+    public ArrayList<QuizResult> getResults() {
+        return results;
     }
 
     public static class QuizVMFactory extends ViewModelProvider.NewInstanceFactory {
