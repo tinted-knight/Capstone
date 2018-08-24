@@ -37,15 +37,17 @@ public class QuizActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            int topicId = intent.getIntExtra(EXTRA_TOPIC_ID, TOPIC_ID_DEFAULT);
-            int difficulty = intent.getIntExtra(EXTRA_DIFFICULTY_LEVEL, DIFFICULTY_LEVEL_DEFAULT);
-            QuizViewModel.QuizVMFactory factory =
-                    new QuizViewModel.QuizVMFactory(getApplication(), topicId, difficulty);
-            viewModel = ViewModelProviders.of(this, factory).get(QuizViewModel.class);
-            showQuizFragment();
-            registerObservers();
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            if (intent != null) {
+                int topicId = intent.getIntExtra(EXTRA_TOPIC_ID, TOPIC_ID_DEFAULT);
+                int difficulty = intent.getIntExtra(EXTRA_DIFFICULTY_LEVEL, DIFFICULTY_LEVEL_DEFAULT);
+                QuizViewModel.QuizVMFactory factory =
+                        new QuizViewModel.QuizVMFactory(getApplication(), topicId, difficulty);
+                viewModel = ViewModelProviders.of(this, factory).get(QuizViewModel.class);
+                showQuizFragment();
+                registerObservers();
+            }
         }
     }
 

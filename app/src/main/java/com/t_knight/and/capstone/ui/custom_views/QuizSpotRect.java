@@ -46,7 +46,8 @@ public class QuizSpotRect {
     }
 
     public int getWordLength() {
-        return endOffset - startOffset;
+        // -2 because of the underlines before and after quiz spot
+        return endOffset - startOffset - 2;
     }
 }
 

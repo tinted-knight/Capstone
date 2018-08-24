@@ -17,12 +17,16 @@ import com.t_knight.and.capstone.model.quiz.QuizSpot;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 class QuizViewModel extends AndroidViewModel {
 
     private final LiveData<Quiz> quiz;
     private final MutableLiveData<QuizCard> currentQuizCard;
     private int currentCardId;
     private final int difficulty;
+    private List<QuizResult> results;
+    private boolean firstTry;
 
     private final MutableLiveData<List<QuizHint>> answersCheckResult;
 
@@ -32,6 +36,8 @@ class QuizViewModel extends AndroidViewModel {
         currentQuizCard = new MutableLiveData<>();
         answersCheckResult = new MutableLiveData<>();
         this.difficulty = difficulty;
+        results = new ArrayList<>();
+        firstTry = true;
     }
 
     public void navigateNextCard() {
@@ -39,6 +45,7 @@ class QuizViewModel extends AndroidViewModel {
         if (cardList.size() > currentCardId + 1) {
             currentCardId++;
             setCurrentQuizCard();
+            firstTry = true;
         }
     }
 
@@ -74,24 +81,37 @@ class QuizViewModel extends AndroidViewModel {
                     for (Object item : spot.getAnswers())
                         correctAnswers.add(((String) item).toLowerCase());
                 }
-
+                QuizHint quizHint;
                 if (answer.equalsIgnoreCase(correctAnswers.get(0))) {
                     // absolutely right
-                    checkResult.add(new QuizHint(true, ""));
-                }
-                else {
+                    quizHint = new QuizHint(true, "");
+                    checkResult.add(quizHint);
+                } else {
                     if (correctAnswers.contains(answer.toLowerCase())) {
                         // right but not absolutely
-                        checkResult.add(new QuizHint(true, spot.getAnswer()));
+                        quizHint = new QuizHint(true, spot.getAnswer());
+                        checkResult.add(quizHint);
                     } else {
                         // wrong
-                        checkResult.add(new QuizHint(false, spot.getAnswer()));
+                        quizHint = new QuizHint(false, spot.getAnswer());
+                        checkResult.add(quizHint);
                     }
                 }
+                if (firstTry) {
+                    QuizResult quizResult =
+                            new QuizResult(
+                                    correctAnswers.get(0),
+                                    quizCard.getSpots().get(i).getHint(),
+                                    quizHint.answerCorrect());
+                    results.add(quizResult);
+                    Timber.i("checkResults: %s", quizResult.toString());
+                }
+                // prepare for next answer
                 i++;
                 correctAnswers.clear();
             }
             answersCheckResult.setValue(checkResult);
+            firstTry = false;
         }
     }
 

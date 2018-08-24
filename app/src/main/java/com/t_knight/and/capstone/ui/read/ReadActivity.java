@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 public class ReadActivity extends AppCompatActivity {
 
     public static final String EXTRA_TOPIC_ID = "topic_id";
+    private final String BUNDLE_CURRENT_READ_CARD = "current_card";
     private final int DEFAULT_READ_CARD_ID = 0;
 
     @BindView(R.id.btn_next) Button btnNext;
@@ -45,14 +46,13 @@ public class ReadActivity extends AppCompatActivity {
                 showReadFragment();
             }
         } else if (getIntent() != null){
-            viewModel = getViewModel(savedInstanceState.getInt("cc"));
+            viewModel = getViewModel(savedInstanceState.getInt(BUNDLE_CURRENT_READ_CARD));
         }
         setupNavigationButtons();
     }
 
     @Override protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("cc", viewModel.getCurrentCard());
-        outState.putParcelable("pp", getIntent().getParcelableExtra(EXTRA_TOPIC_ID));
+        outState.putInt(BUNDLE_CURRENT_READ_CARD, viewModel.getCurrentCard());
         super.onSaveInstanceState(outState);
     }
 

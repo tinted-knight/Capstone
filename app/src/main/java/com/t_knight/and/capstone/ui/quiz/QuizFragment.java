@@ -46,6 +46,9 @@ public class QuizFragment extends Fragment {
     @BindColor(R.color.colorQuizSpotBgCorrect) int colorCorrect;
     @BindColor(R.color.colorQuizSpotBgMispell) int colorMisple;
 
+    private final String BUNDLE_QUIZ_SPOTS = "quiz_edit_texts";
+    private ArrayList<String> quizBundle;
+
     private List<EditText> etQuizAnswers;
     private QuizViewModel viewModel;
 
@@ -60,6 +63,8 @@ public class QuizFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         setClickListeners();
+        if (savedInstanceState != null)
+            quizBundle = savedInstanceState.getStringArrayList(BUNDLE_QUIZ_SPOTS);
 
         return rootView;
     }
@@ -68,6 +73,15 @@ public class QuizFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(getActivity()).get(QuizViewModel.class);
         registerObservers();
+    }
+
+    @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+        ArrayList<String> quizAnswers = new ArrayList<>(etQuizAnswers.size());
+        for (EditText editText : etQuizAnswers) {
+            quizAnswers.add(editText.getText().toString());
+        }
+        outState.putStringArrayList(BUNDLE_QUIZ_SPOTS, quizAnswers);
+        super.onSaveInstanceState(outState);
     }
 
     private void setClickListeners() {
@@ -192,7 +206,11 @@ public class QuizFragment extends Fragment {
                     flQuizCard.addView(etQuiz);
                     etQuizAnswers.add(etQuiz);
                 }
+
                 reorderEditTextsForNavigation();
+                if (quizBundle != null)
+                    for (int j = 0; j < etQuizAnswers.size(); j++)
+                        etQuizAnswers.get(j).setText(quizBundle.get(j));
             }
         });
     }
