@@ -36,8 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_prev"
-            android:textAlignment="textStart" />
+            android:text="@string/btn_prev" />
 
         <Button
             android:id="@+id/btn_next"
@@ -45,8 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_next"
-            android:textAlignment="textEnd" />
+            android:text="@string/btn_next" />
 
     </LinearLayout>
 

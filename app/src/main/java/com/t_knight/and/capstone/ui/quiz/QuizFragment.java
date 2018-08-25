@@ -221,9 +221,10 @@ public class QuizFragment extends Fragment {
             int nextId = etQuizAnswers.get(i + 1).getId();
             etQuizAnswers.get(i).setNextFocusForwardId(nextId);
         }
-        // From last jump to first
+        // From last jump to Check button then to first
         int firstId = etQuizAnswers.get(0).getId();
-        etQuizAnswers.get(maxId).setNextFocusForwardId(firstId);
+        etQuizAnswers.get(maxId).setNextFocusForwardId(btnEnter.getId());
+        btnEnter.setNextFocusForwardId(firstId);
     }
 
     private final View.OnFocusChangeListener showHint = new View.OnFocusChangeListener() {

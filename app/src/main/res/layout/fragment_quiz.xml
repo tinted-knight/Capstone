@@ -48,6 +48,7 @@
             android:layout_marginEnd="@dimen/dimen_quiz_btn_check_horiz_margin"
             android:layout_marginStart="@dimen/dimen_quiz_btn_check_horiz_margin"
             android:text="@string/btn_check_quiz"
+            android:nextFocusLeft="@id/tv_hint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fl_quiz_card" />
