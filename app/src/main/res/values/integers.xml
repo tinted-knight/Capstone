@@ -3,4 +3,7 @@
     <integer name="int_diff_bar_max">4</integer>
     <integer name="int_diff_bar_rating">1</integer>
     <integer name="int_diff_bar_step_size">1</integer>
+
+    <integer name="int_topiclist_update_time_hours">24</integer>
+    <integer name="int_topic_list_update_window_minutes">15</integer>
 </resources>

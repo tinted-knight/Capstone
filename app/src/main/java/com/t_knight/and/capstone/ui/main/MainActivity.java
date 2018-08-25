@@ -1,6 +1,5 @@
 package com.t_knight.and.capstone.ui.main;
 
-import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -30,11 +29,11 @@ import com.t_knight.and.capstone.model.helpers.QuizPair;
 import com.t_knight.and.capstone.ui.AnalyticsUtils;
 import com.t_knight.and.capstone.ui.quiz.QuizActivity;
 import com.t_knight.and.capstone.ui.read.ReadActivity;
-import com.t_knight.and.capstone.ui.widget_new.AppWidget;
 import com.t_knight.and.capstone.ui.widget_new.TopicWidgetService;
 
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindInt;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -43,9 +42,8 @@ public class MainActivity extends AppCompatActivity
         implements TopicListAdapter.TopicListItemClick, TopicDetailsFragment.OnTopicDetailsInteractionListener {
 
     @BindString(R.string.transition_name_topic_cover) String IV_TRANSITION_NAME;
-
-    private static final int periodicity = (int) TimeUnit.HOURS.toSeconds(24); // 3 hours
-    private static final int interval = (int) TimeUnit.MINUTES.toSeconds(15);
+    @BindInt(R.integer.int_topiclist_update_time_hours) int PERIODICITY;
+    @BindInt(R.integer.int_topic_list_update_window_minutes) int INTERVAL;
 
     private MainViewModel viewModel;
 
@@ -79,6 +77,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void scheduleTopicListSync() {
+        final int periodicity = (int) TimeUnit.HOURS.toSeconds(PERIODICITY); // 3 hours
+        final int interval = (int) TimeUnit.MINUTES.toSeconds(INTERVAL);
+
         GooglePlayDriver googlePlayDriver = new GooglePlayDriver(this);
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(googlePlayDriver);
         Job syncJob = dispatcher.newJobBuilder()
