@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#607D8B</color>
-    <color name="colorStatusBar">#000000</color>
+    <color name="colorStatusBar">#3c3c3c</color>
     <color name="colorBackground">#fffafafa</color>
     <color name="colorAccent">#FF5722</color>
 
@@ -17,8 +15,6 @@
     <color name="colorQuizSpotBgError">#FFCDD2</color>
     <color name="colorQuizSpotBgCorrect">#81C784</color>
     <color name="colorQuizSpotBgMispell">#90CAF9</color>
-
-    <color name="colorTintDark">#000000</color>
 
     <color name="colorSummaryRight">#F9FBE7</color>
     <color name="colorSummaryWrong">#FFEBEE</color>

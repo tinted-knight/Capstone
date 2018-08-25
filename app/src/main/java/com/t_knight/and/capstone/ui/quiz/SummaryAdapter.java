@@ -59,7 +59,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryV
         }
 
         public void bind(QuizResult value) {
-            tvWord.setText(value.correctAnswer);
+            tvWord.setText(value.word);
             tvTranslation.setText(value.translation);
             if (value.isCorrect)
                 row.setBackgroundColor(COLOR_WRIGHT);

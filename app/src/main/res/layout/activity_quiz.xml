@@ -9,6 +9,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
         style="@style/AppTheme.Toolbar"
+        android:theme="@style/AppTheme.ToolbarQuizScreen"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_quiz_top_translation_height"
         app:layout_constraintEnd_toEndOf="parent"

@@ -106,13 +106,13 @@ class QuizViewModel extends AndroidViewModel {
                     }
                 }
                 if (firstTry) {
+                    // setup list for quiz summary activity
                     QuizResult quizResult =
                             new QuizResult(
-                                    correctAnswers.get(0),
                                     quizCard.getSpots().get(i).getHint(),
+                                    correctAnswers.get(0),
                                     quizHint.answerCorrect());
                     results.add(quizResult);
-                    Timber.i("checkResults: %s", quizResult.toString());
                 }
                 // prepare for next answer
                 i++;

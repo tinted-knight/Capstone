@@ -5,21 +5,21 @@ import android.os.Parcelable;
 
 public class QuizResult implements Parcelable {
 
-    public final String translation;
+    public final String word;
 
-    public final String correctAnswer;
+    public final String translation;
 
     public final boolean isCorrect;
 
-    public QuizResult(String translation, String correctAnswer, boolean isCorrect) {
+    QuizResult(String word, String translation, boolean isCorrect) {
+        this.word = word;
         this.translation = translation;
-        this.correctAnswer = correctAnswer;
         this.isCorrect = isCorrect;
     }
 
     protected QuizResult(Parcel in) {
+        word = in.readString();
         translation = in.readString();
-        correctAnswer = in.readString();
         isCorrect = in.readByte() != 0;
     }
 
@@ -36,7 +36,7 @@ public class QuizResult implements Parcelable {
     };
 
     @Override public String toString() {
-        return translation + "; " + correctAnswer + "; " + String.valueOf(isCorrect);
+        return word + "; " + translation + "; " + String.valueOf(isCorrect);
     }
 
     @Override public int describeContents() {
@@ -44,8 +44,8 @@ public class QuizResult implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(word);
         dest.writeString(translation);
-        dest.writeString(correctAnswer);
         dest.writeByte((byte) (isCorrect ? 1 : 0));
     }
 }
